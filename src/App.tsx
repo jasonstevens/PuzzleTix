@@ -1,24 +1,26 @@
 
-import { Authenticator } from '@aws-amplify/ui-react';
-
 import '@aws-amplify/ui-react/styles.css';
-import PuzzleEventList from './component/PuzzleEventList';
+import { Suspense } from 'react';
+import { Route, Routes } from 'react-router';
+import RootScreen from './component/screen/RootScreen';
+import ProcessScreen from './component/screen/ProcessScreen';
+import NoMatch from './component/NoMatch';
 
-export default function App() {
+
+const App = () => {
   return (
     <>
-      <PuzzleEventList />
 
+      <Suspense>
+        <Routes>
+          <Route path="/" element={<RootScreen />} />
+          <Route path="test" element={<ProcessScreen />} />
 
-
-      <Authenticator>
-        {({ signOut, user }) => (
-          <main>
-            <h1>Hello {user?.username}</h1>
-            <button onClick={signOut}>Sign out</button>
-          </main>
-        )}
-      </Authenticator>
+          <Route path="*" element={<NoMatch />} />
+        </Routes>
+      </Suspense>
     </>
   );
 };
+
+export default App;

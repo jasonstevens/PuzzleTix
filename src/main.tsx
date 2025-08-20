@@ -4,12 +4,15 @@ import './index.css'
 import App from './App.tsx'
 import outputs from '../amplify_outputs.json';
 import { Amplify } from 'aws-amplify';
+import { BrowserRouter } from 'react-router';
 
 Amplify.configure(outputs);
 
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </StrictMode>,
 )
