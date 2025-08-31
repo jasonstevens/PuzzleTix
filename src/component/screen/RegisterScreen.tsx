@@ -170,7 +170,7 @@ export default function Register() {
 
             <Typography variant="h5">Buyer</Typography>
             <FormGroup>
-              <Stack direction="row" spacing={2}>
+              <Stack direction="row" spacing={1}>
                 <TextField label="First Name" required={true} />
                 <TextField label="Last Name(s)" required={true} />
               </Stack>
