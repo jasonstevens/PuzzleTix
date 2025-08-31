@@ -1,10 +1,10 @@
 import { Autocomplete, Box, Button, FormControl, FormGroup, Rating, Stack, TextField, Typography, Grid, Divider, Checkbox, FormControlLabel } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { countries } from "../Countries";
-
 import { CreditCard, PaymentForm } from 'react-square-web-payments-sdk';
-
 import ExtensionIcon from '@mui/icons-material/Extension';
+
+import logo from '../../assets/puzzletix-white.svg'
 import { useState } from "react";
 
 interface Division {
@@ -99,12 +99,12 @@ export default function Register() {
 
   return (
     <>
-      <Paper sx={{ padding: 1, backgroundColor: "#ffffffbb", borderRadius: '15px' }}>
-        <Stack direction="column" spacing={2}>
+      <Box component="img" src={logo} sx={{ maxWidth: "350px" }} />
 
-          <Stack direction="row" spacing={1}>
-            <Button variant="contained">Cancel</Button>
-          </Stack>
+      <Paper sx={{ padding: 1, backgroundColor: "#ffffffbb", borderRadius: '15px' }}>
+
+        <Button href="/" variant="contained">Return</Button>
+        <Stack direction="column" spacing={2} sx={{ marginTop: 2 }}>
 
           <Stack direction="column" spacing={1} textAlign={"left"}>
             <Typography variant="h4" fontWeight={800}>PuzzleMasters 3000</Typography>
