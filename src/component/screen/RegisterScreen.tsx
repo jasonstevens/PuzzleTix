@@ -117,7 +117,7 @@ export default function Register() {
                     <Typography variant="h5" sx={{ paddingTop: 1 }}>{div.name}</Typography>
                   </Grid>
                   <Grid size={6} textAlign="right">
-                    <Rating defaultValue={0} max={4} size="large" sx={{ margin: '10px' }}
+                    <Rating defaultValue={0} max={div.maximum} size="large" sx={{ margin: '10px' }}
                       icon={getIcon(div)}
                       emptyIcon={getOutlineIcon(div)}
                       onChange={(_event, value) => handleDivisionTotal(value, div)}
