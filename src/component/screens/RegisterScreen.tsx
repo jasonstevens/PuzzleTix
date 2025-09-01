@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, FormControl, FormGroup, Rating, Stack, TextField, Typography, Grid, Divider, Checkbox, FormControlLabel } from "@mui/material";
+import { Autocomplete, Box, Button, FormControl, FormGroup, Rating, Stack, TextField, Typography, Grid, Divider, Checkbox, FormControlLabel, styled } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { countries } from "../Countries";
 import { CreditCard, PaymentForm } from 'react-square-web-payments-sdk';
@@ -6,6 +6,17 @@ import ExtensionIcon from '@mui/icons-material/Extension';
 
 import logo from '../../assets/puzzletix-white.svg'
 import { useState } from "react";
+
+const StyledRating = styled(Rating)({
+  '& .MuiRating-iconFilled': {
+    color: '#f19c9c',
+  },
+  '& .MuiRating-iconHover': {
+    color: '#f2ad8e'
+  },
+});
+
+//background: linear - gradient(110deg, rgba(255, 102, 196, 1) 0 %, rgba(255, 222, 89, 1) 100 %);
 
 interface Division {
   id: number;
@@ -103,7 +114,10 @@ export default function Register() {
 
       <Paper sx={{ padding: 1, backgroundColor: "#ffffffbb", borderRadius: '15px' }}>
 
-        <Button href="/" variant="contained">Return</Button>
+        <Box sx={{ textAlign: "right" }}>
+          <Button href="/" variant="contained">Return</Button>
+        </Box>
+
         <Stack direction="column" spacing={2} sx={{ marginTop: 2 }}>
 
           <Stack direction="column" spacing={1} textAlign={"left"}>
@@ -117,7 +131,7 @@ export default function Register() {
                     <Typography variant="h5" sx={{ paddingTop: 1 }}>{div.name}</Typography>
                   </Grid>
                   <Grid size={6} textAlign="right">
-                    <Rating defaultValue={0} max={div.maximum} size="large" sx={{ margin: '10px' }}
+                    <StyledRating defaultValue={0} max={div.maximum} size="large" sx={{ margin: '10px' }}
                       icon={getIcon(div)}
                       emptyIcon={getOutlineIcon(div)}
                       onChange={(_event, value) => handleDivisionTotal(value, div)}
