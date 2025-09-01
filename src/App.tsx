@@ -8,6 +8,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 
 const RegisterScreen = React.lazy(() => import('./component/screens/RegisterScreen'));
 const ProcessScreen = React.lazy(() => import('./component/screens/ProcessScreen'));
+const WaitScreen = React.lazy(() => import('./component/screens/WaitScreen'));
 
 const theme = createTheme({
   palette: {
@@ -29,6 +30,7 @@ const App = () => {
             <Route path="/" element={<RootScreen />} />
             <Route path="test" element={<ProcessScreen />} />
             <Route path="register" element={<RegisterScreen />} />
+            <Route path="wait" element={<WaitScreen />} />
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </Suspense>
