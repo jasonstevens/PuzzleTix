@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, FormControl, FormGroup, Rating, Stack, TextField, Typography, Grid, Divider, Checkbox, FormControlLabel, styled } from "@mui/material";
+import { Autocomplete, Box, Button, FormControl, FormGroup, Rating, Stack, TextField, Typography, Grid, Divider, Checkbox, FormControlLabel, styled, Dialog, DialogTitle, DialogContentText, DialogActions, DialogContent } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { countries } from "../Countries";
 import { CreditCard, PaymentForm } from 'react-square-web-payments-sdk';
@@ -7,6 +7,7 @@ import InfoIcon from '@mui/icons-material/Info';
 
 import logo from '../../assets/puzzletix-white.svg'
 import { useState } from "react";
+import React from "react";
 
 const StyledRating = styled(Rating)({
   '& .MuiRating-iconFilled': {
@@ -20,8 +21,6 @@ const StyledRating = styled(Rating)({
     color: '#f0c3acff'
   },
 });
-
-//background: linear - gradient(110deg, rgba(255, 102, 196, 1) 0 %, rgba(255, 222, 89, 1) 100 %);
 
 interface Division {
   id: number;
@@ -41,10 +40,22 @@ interface DivisionData {
 }
 
 const divs: Division[] = [
-  { id: 1, name: "Solo", description: "Complete a puzzle by yourself.", type: 1, maximum: 4, cost: 30 },
-  { id: 2, name: "Pairs", description: "Complete a puzzle as a pair. Only one ticket required per pair.", type: 2, maximum: 2, cost: 40 },
-  { id: 3, name: "Teams", description: "Complete a puzzle as a team of 3 or 4.  Only one ticket required per team.", type: 4, maximum: 2, cost: 50 },
-  { id: 4, name: "Puzzle Chicken", description: "Puzzle Chicken side event.", url: "https://ukjpa.org/chicken", type: 1, maximum: 2, cost: 10 }
+  {
+    id: 1, name: "Solo", description: "Complete a puzzle as an individual.", type: 1, maximum: 4, cost: 30,
+    extraText: "Solo division uses an unreleased 500pc Ravensburger puzzle. The puzzle is yours to keep and take home after completion of the event."
+  },
+  {
+    id: 2, name: "Pairs", description: "Complete a puzzle as a pair. Only one ticket required per pair.", type: 2, maximum: 2, cost: 40,
+    extraText: "The Pairs division uses two unreleased 500pc Ravensburger puzzles. The puzzle is yours to keep and take home after completion of the event."
+  },
+  {
+    id: 3, name: "Teams", description: "Complete a puzzle as a team of 3 or 4.  Only one ticket required per team.", type: 4, maximum: 2, cost: 50,
+    extraText: "Teams division uses an unreleased 1000pc Ravensburger puzzle. The puzzle is yours to keep and take home after completion of the event."
+  },
+  {
+    id: 4, name: "Puzzle Chicken", description: "Puzzle Chicken side event.", url: "https://ukjpa.org/chicken", type: 1, maximum: 2, cost: 10,
+    extraText: "Puzzle Chicken is a fun new type of casual speed race created by the UKJPA, and has been run at numerous online and in-person events.\n\nFor more details and full rules, see the website linked below."
+  }
 ];
 
 const getIcon = (div: Division) => {
@@ -64,6 +75,13 @@ const getOutlineIcon = (div: Division) => {
 }
 
 export default function Register() {
+
+  const [open, setOpen] = React.useState(false);
+  const [dialogDiv, setDialogDiv] = React.useState<Division>();
+
+  const handleClickOpen = (div: Division) => { setOpen(true), setDialogDiv(div) };
+
+  const handleClose = () => { setOpen(false); };
 
   const [div1, setDiv1] = useState<DivisionData[]>([]);
   const [div2, setDiv2] = useState<DivisionData[]>([]);
@@ -152,7 +170,7 @@ export default function Register() {
                 <Grid container columns={8} sx={{ width: "100%" }} spacing={0}>
                   <Grid size={5}>
                     <Stack direction="row">
-                      <a href={div.url}><InfoIcon sx={{ fontSize: 30, marginRight: '0.5rem', marginTop: '0.55rem' }} color="primary" /></a>
+                      <a onClick={(_event) => handleClickOpen(div)}><InfoIcon sx={{ fontSize: 30, marginRight: '0.5rem', marginTop: '0.55rem' }} color="primary" /></a>
                       <Typography variant="h5" sx={{ paddingTop: 1, fontWeight: 600 }}>{div.name}</Typography>
                     </Stack>
                   </Grid>
@@ -271,9 +289,24 @@ export default function Register() {
 
         </Stack>
       </Paper>
+
+      {InfoDialog(open, dialogDiv, handleClose)}
     </>
   );
 };
+
+function InfoDialog(open: boolean, division: Division | undefined, handleClose: () => void) {
+  return <Dialog open={open} onClose={handleClose} sx={{ padding: 0 }}>
+    <DialogTitle sx={{ padding: 1 }}>{division?.name}</DialogTitle>
+    <DialogContent sx={{ padding: 1 }}>
+      <DialogContentText sx={{ whiteSpace: "pre-line" }}>{division?.extraText}</DialogContentText>
+    </DialogContent>
+    <DialogActions>
+      {division?.url && <Button onClick={() => { window.open(division.url, "_this"); }}>Website</Button>}
+      <Button onClick={handleClose}>Close</Button>
+    </DialogActions>
+  </Dialog>
+}
 
 function ticketFields(_dd: DivisionData, div: Division, index: number) {
   return <>
