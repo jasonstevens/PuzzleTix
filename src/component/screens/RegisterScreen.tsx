@@ -3,16 +3,21 @@ import Paper from "@mui/material/Paper";
 import { countries } from "../Countries";
 import { CreditCard, PaymentForm } from 'react-square-web-payments-sdk';
 import ExtensionIcon from '@mui/icons-material/Extension';
+import InfoIcon from '@mui/icons-material/Info';
 
 import logo from '../../assets/puzzletix-white.svg'
 import { useState } from "react";
 
 const StyledRating = styled(Rating)({
   '& .MuiRating-iconFilled': {
-    color: '#f19c9c',
+    color: '#ed8b8bff',
   },
   '& .MuiRating-iconHover': {
     color: '#f2ad8e'
+  },
+
+  '&   .MuiRating-iconEmpty': {
+    color: '#f0c3acff'
   },
 });
 
@@ -25,6 +30,8 @@ interface Division {
   type: number;
   maximum: number;
   cost?: number;
+  extraText?: string;
+  url?: string;
 }
 
 interface DivisionData {
@@ -36,7 +43,8 @@ interface DivisionData {
 const divs: Division[] = [
   { id: 1, name: "Solo", description: "Complete a puzzle by yourself.", type: 1, maximum: 4, cost: 30 },
   { id: 2, name: "Pairs", description: "Complete a puzzle as a pair. Only one ticket required per pair.", type: 2, maximum: 2, cost: 40 },
-  { id: 3, name: "Teams", description: "Complete a puzzle as a team of 3 or 4.  Only one ticket required per team.", type: 4, maximum: 2, cost: 50 }
+  { id: 3, name: "Teams", description: "Complete a puzzle as a team of 3 or 4.  Only one ticket required per team.", type: 4, maximum: 2, cost: 50 },
+  { id: 4, name: "Puzzle Chicken", description: "Puzzle Chicken side event.", url: "https://ukjpa.org/chicken", type: 1, maximum: 2, cost: 10 }
 ];
 
 const getIcon = (div: Division) => {
@@ -60,6 +68,7 @@ export default function Register() {
   const [div1, setDiv1] = useState<DivisionData[]>([]);
   const [div2, setDiv2] = useState<DivisionData[]>([]);
   const [div3, setDiv3] = useState<DivisionData[]>([]);
+  const [div4, setDiv4] = useState<DivisionData[]>([]);
 
   function handleDivisionTotal(value: number | null, division: Division): void {
     //event: SyntheticEvent<Element, Event>, 
@@ -106,6 +115,20 @@ export default function Register() {
         setDiv3([]);
       }
     }
+
+    if (division.id == 4) {
+      if (value) {
+        if (div4?.length < value) {
+          for (let i = 0; i < value - div4.length; i++) {
+            setDiv4(prevItems => [...prevItems, { index: 0 }])
+          }
+        } else if (div3?.length > value) {
+          setDiv4([...div4].slice(0, value));
+        }
+      } else {
+        setDiv4([]);
+      }
+    }
   }
 
   return (
@@ -127,10 +150,13 @@ export default function Register() {
               <>
                 <Divider />
                 <Grid container columns={8} sx={{ width: "100%" }} spacing={0}>
-                  <Grid size={2}>
-                    <Typography variant="h5" sx={{ paddingTop: 1 }}>{div.name}</Typography>
+                  <Grid size={5}>
+                    <Stack direction="row">
+                      <a href={div.url}><InfoIcon sx={{ fontSize: 30, marginRight: '0.5rem', marginTop: '0.55rem' }} color="primary" /></a>
+                      <Typography variant="h5" sx={{ paddingTop: 1, fontWeight: 600 }}>{div.name}</Typography>
+                    </Stack>
                   </Grid>
-                  <Grid size={6} textAlign="right">
+                  <Grid size={3} textAlign="right">
                     <StyledRating defaultValue={0} max={div.maximum} size="large" sx={{ margin: '10px' }}
                       icon={getIcon(div)}
                       emptyIcon={getOutlineIcon(div)}
@@ -143,7 +169,7 @@ export default function Register() {
                         <Typography>{div.description}</Typography>
                       </Grid>
                       <Grid size={2} textAlign="right" sx={{ paddingRight: 1.5 }}>
-                        <Typography variant="h6">£{div.cost}</Typography>
+                        <Typography variant="h6" sx={{ fontWeight: 600 }}>£{div.cost}</Typography>
                       </Grid>
                     </>
                     :
@@ -174,6 +200,14 @@ export default function Register() {
                 {div.id == 3 &&
                   <>
                     {div3?.map((dd, index) => (
+                      ticketFields(dd, div, index)
+                    ))}
+                  </>
+                }
+
+                {div.id == 4 &&
+                  <>
+                    {div4?.map((dd, index) => (
                       ticketFields(dd, div, index)
                     ))}
                   </>
@@ -257,14 +291,14 @@ function ticketFields(_dd: DivisionData, div: Division, index: number) {
               <TextField label="First Name" required={true} />
               <TextField label="Last Name(s)" required={true} />
             </Stack>
-            <FormControlLabel required control={<Checkbox />} label="Both puzzlers meet the prize eligibility requirements" />
+            <FormControlLabel required control={<Checkbox />} label="Both puzzlers meet the eligibility requirements" />
           </>
         }
 
         {div.type == 4 &&
           <>
             <TextField label="Team Name" required={true} />
-            <FormControlLabel required control={<Checkbox />} label="Two of the team's puzzlers meet the prize eligibility requirements" />
+            <FormControlLabel required control={<Checkbox />} label="Two of the team's puzzlers meet the eligibility requirements" />
           </>
         }
       </Stack>
