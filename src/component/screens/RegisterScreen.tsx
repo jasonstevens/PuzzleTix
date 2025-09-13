@@ -1,26 +1,14 @@
-import { Autocomplete, Box, Button, FormControl, FormGroup, Rating, Stack, TextField, Typography, Grid, Divider, Checkbox, FormControlLabel, styled, Dialog, DialogTitle, DialogContentText, DialogActions, DialogContent } from "@mui/material";
-import Paper from "@mui/material/Paper";
+import {
+  Autocomplete, Box, Button, FormControl, FormGroup, Stack, TextField, Typography, Grid, Divider, Checkbox, FormControlLabel,
+  Dialog, DialogTitle, DialogContentText, DialogActions, DialogContent, Select, MenuItem, Paper
+} from "@mui/material";
 import { countries } from "../Countries";
 import { CreditCard, PaymentForm } from 'react-square-web-payments-sdk';
-import ExtensionIcon from '@mui/icons-material/Extension';
 import InfoIcon from '@mui/icons-material/Info';
 
 import logo from '../../assets/puzzletix-white.svg'
 import { useState } from "react";
 import React from "react";
-
-const StyledRating = styled(Rating)({
-  '& .MuiRating-iconFilled': {
-    color: '#ed8b8bff',
-  },
-  '& .MuiRating-iconHover': {
-    color: '#f2ad8e'
-  },
-
-  '&   .MuiRating-iconEmpty': {
-    color: '#f0c3acff'
-  },
-});
 
 interface Division {
   id: number;
@@ -31,6 +19,7 @@ interface Division {
   cost?: number;
   extraText?: string;
   url?: string;
+
 }
 
 interface DivisionData {
@@ -38,6 +27,15 @@ interface DivisionData {
   firstName?: string;
   lastName?: string;
 }
+
+interface EventData {
+  name: string;
+  maxSpectators: number;
+}
+
+const event: EventData =
+  { name: "PuzzleMaster 40k", maxSpectators: 6 }
+
 
 const divs: Division[] = [
   {
@@ -58,22 +56,6 @@ const divs: Division[] = [
   }
 ];
 
-const getIcon = (div: Division) => {
-  switch (div.type) {
-    case 2: return <ExtensionIcon fontSize="inherit" />
-    case 4: return <ExtensionIcon fontSize="inherit" />
-    default: return <ExtensionIcon fontSize="inherit" />
-  }
-}
-
-const getOutlineIcon = (div: Division) => {
-  switch (div.type) {
-    case 2: return <ExtensionIcon fontSize="inherit" />
-    case 4: return <ExtensionIcon fontSize="inherit" />
-    default: return <ExtensionIcon fontSize="inherit" />
-  }
-}
-
 export default function Register() {
 
   const [open, setOpen] = React.useState(false);
@@ -87,9 +69,11 @@ export default function Register() {
   const [div2, setDiv2] = useState<DivisionData[]>([]);
   const [div3, setDiv3] = useState<DivisionData[]>([]);
   const [div4, setDiv4] = useState<DivisionData[]>([]);
+  const [div5, setDiv5] = useState<DivisionData[]>([]);
 
-  function handleDivisionTotal(value: number | null, division: Division): void {
-    //event: SyntheticEvent<Element, Event>, 
+
+  function funcStuff(event: React.ChangeEvent<Omit<HTMLInputElement, "value"> & { value: number; }> | (Event & { target: { value: number; name: string; }; }), division: Division): void {
+    const value = event.target.value;
     console.log(value);
 
     if (division.id == 1) {
@@ -140,11 +124,25 @@ export default function Register() {
           for (let i = 0; i < value - div4.length; i++) {
             setDiv4(prevItems => [...prevItems, { index: 0 }])
           }
-        } else if (div3?.length > value) {
+        } else if (div4?.length > value) {
           setDiv4([...div4].slice(0, value));
         }
       } else {
         setDiv4([]);
+      }
+    }
+
+    if (division.id == 5) {
+      if (value) {
+        if (div5?.length < value) {
+          for (let i = 0; i < value - div5.length; i++) {
+            setDiv5(prevItems => [...prevItems, { index: 0 }])
+          }
+        } else if (div5?.length > value) {
+          setDiv5([...div5].slice(0, value));
+        }
+      } else {
+        setDiv5([]);
       }
     }
   }
@@ -175,11 +173,13 @@ export default function Register() {
                     </Stack>
                   </Grid>
                   <Grid size={3} textAlign="right">
-                    <StyledRating defaultValue={0} max={div.maximum} size="large" sx={{ margin: '10px' }}
-                      icon={getIcon(div)}
-                      emptyIcon={getOutlineIcon(div)}
-                      onChange={(_event, value) => handleDivisionTotal(value, div)}
-                    />
+
+                    <Select defaultValue={0} onChange={(event) => funcStuff(event, div)} sx={{ p: 0, m: 0, height: '40px', fontWeight: 800 }}>
+                      {Array(div.maximum + 1).fill(1).map((_el, i) =>
+                        <MenuItem value={i}>{i}</MenuItem>
+                      )}
+                    </Select>
+
                   </Grid>
                   {div.cost ?
                     <>
@@ -230,8 +230,66 @@ export default function Register() {
                     ))}
                   </>
                 }
+
+                {div.id == 5 &&
+                  <>
+                    {div5?.map((dd, index) => (
+                      ticketFields(dd, div, index)
+                    ))}
+                  </>
+                }
               </>
             ))}
+
+
+
+            <Divider />
+            <Grid container columns={8} sx={{ width: "100%" }} spacing={0}>
+              <Grid size={5}>
+                <Stack direction="row">
+                  <Typography variant="h5" sx={{ paddingTop: 1, fontWeight: 600 }}>Spectators</Typography>
+                </Stack>
+              </Grid>
+              <Grid size={3} textAlign="right">
+                <Select defaultValue={0} sx={{ p: 0, m: 0, height: '40px', fontWeight: 800 }}>
+                  {Array(event.maxSpectators + 1).fill(1).map((_el, i) =>
+                    <MenuItem value={i}>{i}</MenuItem>
+                  )}
+                </Select>
+              </Grid>
+
+
+              <Grid size={5}>
+                <Stack direction="row">
+                  <Typography sx={{ paddingTop: 1 }}>Select a Donation amount (per seat)</Typography>
+                </Stack>
+              </Grid>
+              <Grid size={3} textAlign="right">
+
+                <Select defaultValue={0} sx={{ p: 0, m: 0, marginTop: 1, height: '40px', fontWeight: 800 }}>
+                  {Array(5).fill(1).map((_el, i) =>
+                    <MenuItem value={i}>£{i}</MenuItem>
+                  )}
+                </Select>
+
+              </Grid>
+
+            </Grid>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             <Typography variant="h5">Buyer</Typography>
@@ -310,28 +368,28 @@ function InfoDialog(open: boolean, division: Division | undefined, handleClose: 
 
 function ticketFields(_dd: DivisionData, div: Division, index: number) {
   return <>
-    <Paper sx={{ padding: 1, borderRadius: '10px', backgroundColor: "#ffffff66" }}>
+    <Paper sx={{ m: 0, padding: 1, borderRadius: '5px', backgroundColor: "#ffffff66" }}>
       <Typography variant="h6">{div.name} Ticket {index + 1}</Typography>
-      <Stack direction="column" spacing={1}>
+      <Stack direction="column" spacing={'5px'}>
         {div.type < 4 &&
-          <Stack direction="row" spacing={1}>
-            <TextField label="First Name" required={true} />
-            <TextField label="Last Name(s)" required={true} />
+          <Stack direction="row" spacing={'5px'}>
+            <TextField label="First Name" required={true} size='small' />
+            <TextField label="Last Name(s)" required={true} size='small' />
           </Stack>}
         {div.type == 2 &&
           <>
-            <Stack direction="row" spacing={1}>
-              <TextField label="First Name" required={true} />
-              <TextField label="Last Name(s)" required={true} />
+            <Stack direction="row" spacing={'5px'}>
+              <TextField label="First Name" required={true} variant='outlined' size='small' />
+              <TextField label="Last Name(s)" required={true} variant='outlined' size='small' />
             </Stack>
-            <FormControlLabel required control={<Checkbox />} label="Both puzzlers meet the eligibility requirements" />
+            <FormControlLabel required control={<Checkbox />} label="Both puzzlers meet eligibility requirements" />
           </>
         }
 
         {div.type == 4 &&
           <>
-            <TextField label="Team Name" required={true} />
-            <FormControlLabel required control={<Checkbox />} label="Two of the team's puzzlers meet the eligibility requirements" />
+            <TextField label="Team Name" required={true} size='small' />
+            <FormControlLabel required control={<Checkbox />} label="Two of the team's puzzlers meet eligibility requirements" />
           </>
         }
       </Stack>
