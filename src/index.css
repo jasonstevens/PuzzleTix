@@ -1,11 +1,11 @@
 :root {
-  background: #FF66C4;
-  background: linear-gradient(110deg, rgba(255, 102, 196, 1) 0%, rgba(255, 222, 89, 1) 100%);
-
   body {
     display: flex;
+    background: #FF66C4;
+    background: linear-gradient(110deg, rgba(255, 102, 196, 1) 0%, rgba(255, 222, 89, 1) 100%);
   }
 }
+
 
 #rswp-card-button {
   background-color: #e33e7f;

@@ -19,7 +19,6 @@ interface Division {
   cost?: number;
   extraText?: string;
   url?: string;
-
 }
 
 interface DivisionData {
@@ -34,13 +33,13 @@ interface EventData {
 }
 
 const event: EventData =
-  { name: "PuzzleMaster 40k", maxSpectators: 6 }
+  { name: "Alderaan Regionals 1976", maxSpectators: 6 }
 
 
 const divs: Division[] = [
   {
     id: 1, name: "Solo", description: "Complete a puzzle as an individual.", type: 1, maximum: 4, cost: 30,
-    extraText: "Solo division uses an unreleased 500pc Ravensburger puzzle. The puzzle is yours to keep and take home after completion of the event."
+    extraText: "Solo division uses an unreleased 500pc Ravensburger puzzle. The puzzle is yours to keep and take home after completion of the event. All Ewoks must be accompanied by a Wookie."
   },
   {
     id: 2, name: "Pairs", description: "Complete a puzzle as a pair. Only one ticket required per pair.", type: 2, maximum: 2, cost: 40,
@@ -50,10 +49,10 @@ const divs: Division[] = [
     id: 3, name: "Teams", description: "Complete a puzzle as a team of 3 or 4.  Only one ticket required per team.", type: 4, maximum: 2, cost: 50,
     extraText: "Teams division uses an unreleased 1000pc Ravensburger puzzle. The puzzle is yours to keep and take home after completion of the event."
   },
-  {
-    id: 4, name: "Puzzle Chicken", description: "Puzzle Chicken side event.", url: "https://ukjpa.org/chicken", type: 1, maximum: 2, cost: 10,
-    extraText: "Puzzle Chicken is a fun new type of casual speed race created by the UKJPA, and has been run at numerous online and in-person events.\n\nFor more details and full rules, see the website linked below."
-  }
+  // {
+  //   id: 4, name: "Puzzle Chicken", description: "Puzzle Chicken side event.", url: "https://ukjpa.org/chicken", type: 1, maximum: 2, cost: 10,
+  //   extraText: "Puzzle Chicken is a fun new type of casual speed race created by the UKJPA, and has been run at numerous online and in-person events.\n\nFor more details and full rules, see the website linked below."
+  // }
 ];
 
 export default function Register() {
@@ -150,15 +149,15 @@ export default function Register() {
   return (
     <>
       <Box component="img" src={logo} sx={{ maxWidth: "350px" }} />
-
       <Paper sx={{ padding: 1, backgroundColor: "#ffffffbb", borderRadius: '15px' }}>
-        <Box sx={{ textAlign: "right" }}><Button href="/" variant="contained">Return</Button></Box>
+        <Box component="img" src={'/events/alderaan.png'} sx={{ maxWidth: "350px" }} />
+        <Box sx={{ textAlign: "center" }} alignItems='center'>
+          <Button sx={{ m: 1 }} href="http://www.starwars.com" variant="contained">Details</Button>
+          <Button sx={{ m: 1 }} href="/" variant="contained">Return</Button>
+        </Box>
 
-        <Stack direction="column" spacing={2} sx={{ marginTop: 2 }}>
-
+        <Stack direction="column" spacing={2}>
           <Stack direction="column" spacing={1} textAlign={"left"}>
-            <Typography variant="h4" fontWeight={800}>PuzzleMasters 3000</Typography>
-
             {divs.map(div => (
               <>
                 <Divider />
@@ -170,7 +169,6 @@ export default function Register() {
                     </Stack>
                   </Grid>
                   <Grid size={3} textAlign="right">
-
                     <Select defaultValue={0} onChange={(event) => funcStuff(event, div)} sx={{ p: 0, m: 0, fontWeight: 800 }} size='small'>
                       {Array(div.maximum + 1).fill(1).map((_el, i) => <MenuItem value={i}>{i}</MenuItem>)}
                     </Select>
@@ -185,12 +183,11 @@ export default function Register() {
                     <Grid size={8}><Typography>{div.description}</Typography></Grid>
                   }
                 </Grid>
-
-                {div.id == 1 && <>{div1?.map((dd, index) => (ticketFields(dd, div, index)))}</>}
-                {div.id == 2 && <>{div2?.map((dd, index) => (ticketFields(dd, div, index)))}</>}
-                {div.id == 3 && <>{div3?.map((dd, index) => (ticketFields(dd, div, index)))}</>}
-                {div.id == 4 && <>{div4?.map((dd, index) => (ticketFields(dd, div, index)))}</>}
-                {div.id == 5 && <>{div5?.map((dd, index) => (ticketFields(dd, div, index)))}</>}
+                {div.id == 1 && div1.length > 0 && <Paper sx={{ m: 0, padding: 0.7, borderRadius: '5px', backgroundColor: "#ffffff66" }}><Stack spacing={0.5}>{div1?.map((dd, index) => (ticketFields(dd, div, index)))}</Stack></Paper>}
+                {div.id == 2 && div2.length > 0 && <Paper sx={{ m: 0, padding: 0.7, borderRadius: '5px', backgroundColor: "#ffffff66" }}><Stack spacing={0.5}>{div2?.map((dd, index) => (ticketFields(dd, div, index)))}</Stack></Paper>}
+                {div.id == 3 && div3.length > 0 && <Paper sx={{ m: 0, padding: 0.7, borderRadius: '5px', backgroundColor: "#ffffff66" }}><Stack spacing={0.5}>{div3?.map((dd, index) => (ticketFields(dd, div, index)))}</Stack></Paper>}
+                {div.id == 4 && div4.length > 0 && <Paper sx={{ m: 0, padding: 0.7, borderRadius: '5px', backgroundColor: "#ffffff66" }}><Stack spacing={0.5}>{div4?.map((dd, index) => (ticketFields(dd, div, index)))}</Stack></Paper>}
+                {div.id == 5 && div5.length > 0 && <Paper sx={{ m: 0, padding: 0.7, borderRadius: '5px', backgroundColor: "#ffffff66" }}><Stack spacing={0.5}>{div5?.map((dd, index) => (ticketFields(dd, div, index)))}</Stack></Paper>}
               </>
             ))}
 
@@ -257,7 +254,7 @@ export default function Register() {
             </PaymentForm>
           </Stack>
         </Stack>
-      </Paper>
+      </Paper >
 
       {InfoDialog(open, dialogDiv, handleClose)}
     </>
@@ -279,8 +276,8 @@ function InfoDialog(open: boolean, division: Division | undefined, handleClose: 
 
 function ticketFields(_dd: DivisionData, div: Division, index: number) {
   return <>
-    <Paper sx={{ m: 0, padding: 1, borderRadius: '5px', backgroundColor: "#ffffff66" }}>
-      <Typography variant="h6">{div.name} Ticket {index + 1}</Typography>
+    <Stack direction="row" spacing={0.75}>
+      <Typography sx={{ paddingTop: '4px' }} variant="h5" fontWeight={700}>{index + 1}</Typography>
       <Stack direction="column" spacing={'5px'}>
         {div.type < 4 &&
           <Stack direction="row" spacing={'5px'}>
@@ -296,7 +293,6 @@ function ticketFields(_dd: DivisionData, div: Division, index: number) {
             <FormControlLabel required control={<Checkbox />} label="Both puzzlers meet eligibility requirements" />
           </>
         }
-
         {div.type == 4 &&
           <>
             <TextField label="Team Name" required={true} size='small' />
@@ -304,6 +300,6 @@ function ticketFields(_dd: DivisionData, div: Division, index: number) {
           </>
         }
       </Stack>
-    </Paper>
-  </>;
+    </Stack>
+  </>
 }
