@@ -152,10 +152,7 @@ export default function Register() {
       <Box component="img" src={logo} sx={{ maxWidth: "350px" }} />
 
       <Paper sx={{ padding: 1, backgroundColor: "#ffffffbb", borderRadius: '15px' }}>
-
-        <Box sx={{ textAlign: "right" }}>
-          <Button href="/" variant="contained">Return</Button>
-        </Box>
+        <Box sx={{ textAlign: "right" }}><Button href="/" variant="contained">Return</Button></Box>
 
         <Stack direction="column" spacing={2} sx={{ marginTop: 2 }}>
 
@@ -174,135 +171,54 @@ export default function Register() {
                   </Grid>
                   <Grid size={3} textAlign="right">
 
-                    <Select defaultValue={0} onChange={(event) => funcStuff(event, div)} sx={{ p: 0, m: 0, height: '40px', fontWeight: 800 }}>
-                      {Array(div.maximum + 1).fill(1).map((_el, i) =>
-                        <MenuItem value={i}>{i}</MenuItem>
-                      )}
+                    <Select defaultValue={0} onChange={(event) => funcStuff(event, div)} sx={{ p: 0, m: 0, fontWeight: 800 }} size='small'>
+                      {Array(div.maximum + 1).fill(1).map((_el, i) => <MenuItem value={i}>{i}</MenuItem>)}
                     </Select>
 
                   </Grid>
                   {div.cost ?
                     <>
-                      <Grid size={6}>
-                        <Typography>{div.description}</Typography>
-                      </Grid>
-                      <Grid size={2} textAlign="right" sx={{ paddingRight: 1.5 }}>
-                        <Typography variant="h6" sx={{ fontWeight: 600 }}>£{div.cost}</Typography>
-                      </Grid>
+                      <Grid size={6}><Typography>{div.description}</Typography></Grid>
+                      <Grid size={2} textAlign="right" sx={{ paddingRight: 1.5 }}><Typography variant="h6" sx={{ fontWeight: 600 }}>£{div.cost}</Typography></Grid>
                     </>
                     :
-                    <>
-                      <Grid size={8}>
-                        <Typography>{div.description}</Typography>
-                      </Grid>
-                    </>
+                    <Grid size={8}><Typography>{div.description}</Typography></Grid>
                   }
                 </Grid>
 
-                {div.id == 1 &&
-                  <>
-                    {div1?.map((dd, index) => (
-                      ticketFields(dd, div, index)
-                    ))}
-                  </>
-                }
-
-                {div.id == 2 &&
-                  <>
-                    {div2?.map((dd, index) => (
-                      ticketFields(dd, div, index)
-                    ))}
-                  </>
-                }
-
-                {div.id == 3 &&
-                  <>
-                    {div3?.map((dd, index) => (
-                      ticketFields(dd, div, index)
-                    ))}
-                  </>
-                }
-
-                {div.id == 4 &&
-                  <>
-                    {div4?.map((dd, index) => (
-                      ticketFields(dd, div, index)
-                    ))}
-                  </>
-                }
-
-                {div.id == 5 &&
-                  <>
-                    {div5?.map((dd, index) => (
-                      ticketFields(dd, div, index)
-                    ))}
-                  </>
-                }
+                {div.id == 1 && <>{div1?.map((dd, index) => (ticketFields(dd, div, index)))}</>}
+                {div.id == 2 && <>{div2?.map((dd, index) => (ticketFields(dd, div, index)))}</>}
+                {div.id == 3 && <>{div3?.map((dd, index) => (ticketFields(dd, div, index)))}</>}
+                {div.id == 4 && <>{div4?.map((dd, index) => (ticketFields(dd, div, index)))}</>}
+                {div.id == 5 && <>{div5?.map((dd, index) => (ticketFields(dd, div, index)))}</>}
               </>
             ))}
 
-
-
             <Divider />
             <Grid container columns={8} sx={{ width: "100%" }} spacing={0}>
-              <Grid size={5}>
-                <Stack direction="row">
-                  <Typography variant="h5" sx={{ paddingTop: 1, fontWeight: 600 }}>Spectators</Typography>
-                </Stack>
-              </Grid>
+              <Grid size={5}><Typography variant="h5" sx={{ paddingTop: 1, fontWeight: 600 }}>Spectators</Typography></Grid>
               <Grid size={3} textAlign="right">
-                <Select defaultValue={0} sx={{ p: 0, m: 0, height: '40px', fontWeight: 800 }}>
-                  {Array(event.maxSpectators + 1).fill(1).map((_el, i) =>
-                    <MenuItem value={i}>{i}</MenuItem>
-                  )}
+                <Select defaultValue={0} sx={{ p: 0, m: 0, fontWeight: 800 }} size='small'>
+                  {Array(event.maxSpectators + 1).fill(1).map((_el, i) => <MenuItem value={i}>{i}</MenuItem>)}
+                </Select>
+                <Select defaultValue={0} sx={{ p: 0, m: 0, marginLeft: 1, fontWeight: 800 }} size='small'>
+                  {Array(5).fill(1).map((_el, i) => <MenuItem value={i}>£{i}</MenuItem>)}
                 </Select>
               </Grid>
-
-
-              <Grid size={5}>
-                <Stack direction="row">
-                  <Typography sx={{ paddingTop: 1 }}>Select a Donation amount (per seat)</Typography>
-                </Stack>
-              </Grid>
-              <Grid size={3} textAlign="right">
-
-                <Select defaultValue={0} sx={{ p: 0, m: 0, marginTop: 1, height: '40px', fontWeight: 800 }}>
-                  {Array(5).fill(1).map((_el, i) =>
-                    <MenuItem value={i}>£{i}</MenuItem>
-                  )}
-                </Select>
-
-              </Grid>
-
+              <Grid size={8}><Typography sx={{ paddingTop: 1 }}>Select a donation amount (per spectator).</Typography></Grid>
             </Grid>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             <Typography variant="h5">Buyer</Typography>
             <FormGroup>
               <Stack direction="row" spacing={1}>
-                <TextField label="First Name" required={true} />
-                <TextField label="Last Name(s)" required={true} />
+                <TextField label="First Name" required={true} size='small' />
+                <TextField label="Last Name(s)" required={true} size='small' />
               </Stack>
             </FormGroup>
-            <TextField label="E-Mail Address" required={true} />
+            <TextField label="E-Mail Address" required={true} size='small' />
 
             <FormControl>
-              <Autocomplete autoHighlight options={countries} getOptionLabel={(option) => option.label}
+              <Autocomplete autoHighlight options={countries} getOptionLabel={(option) => option.label} size='small'
                 renderOption={(props, option) => {
                   const { key, ...optionProps } = props;
                   return (
@@ -323,8 +239,6 @@ export default function Register() {
 
 
             <Typography variant="h5">Payment</Typography>
-
-
             <Typography>Cost Summary Here</Typography>
 
             <PaymentForm
@@ -342,9 +256,6 @@ export default function Register() {
 
             </PaymentForm>
           </Stack>
-
-
-
         </Stack>
       </Paper>
 
