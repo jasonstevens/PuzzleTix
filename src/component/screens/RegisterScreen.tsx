@@ -47,12 +47,12 @@ const divs: Division[] = [
   },
   {
     id: 3, name: "Teams", description: "Complete a puzzle as a team of 3 or 4.  Only one ticket required per team.", type: 4, maximum: 2, cost: 50,
-    extraText: "Teams division uses an unreleased 1000pc Ravensburger puzzle. The puzzle is yours to keep and take home after completion of the event."
+    extraText: "Teams division uses an unreleased 1000pc Ravensburger puzzle. The puzzle is yours to keep and take home after completion of the event. No Jedi."
   },
-  // {
-  //   id: 4, name: "Puzzle Chicken", description: "Puzzle Chicken side event.", url: "https://ukjpa.org/chicken", type: 1, maximum: 2, cost: 10,
-  //   extraText: "Puzzle Chicken is a fun new type of casual speed race created by the UKJPA, and has been run at numerous online and in-person events.\n\nFor more details and full rules, see the website linked below."
-  // }
+  {
+    id: 4, name: "Puzzle Chicken", description: "Puzzle Chicken side event run per UKJPA Blitz rules.", url: "https://ukjpa.org/chicken", type: 1, maximum: 2, cost: 10,
+    extraText: "Puzzle Chicken is a fun new type of casual speed race created by the UKJPA, and has been run at numerous online and in-person events.\n\nFor more details and full rules, see the website linked below."
+  }
 ];
 
 export default function Register() {
