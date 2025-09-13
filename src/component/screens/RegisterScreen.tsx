@@ -150,7 +150,7 @@ export default function Register() {
     <>
       <Box component="img" src={logo} sx={{ maxWidth: "350px" }} />
       <Paper sx={{ padding: 1, backgroundColor: "#ffffffbb", borderRadius: '15px' }}>
-        <Box component="img" src={'/events/alderaan.png'} sx={{ maxWidth: "350px" }} />
+        <Box component="img" src={'/events/alderaan.png'} sx={{ maxWidth: "380px" }} />
         <Box sx={{ textAlign: "center" }} alignItems='center'>
           <Button sx={{ m: 1 }} href="http://www.starwars.com" variant="contained">Details</Button>
           <Button sx={{ m: 1 }} href="/" variant="contained">Return</Button>
