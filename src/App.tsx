@@ -5,13 +5,13 @@ import RootScreen from './component/screens/RootScreen';
 import NoMatch from './component/NoMatch';
 import React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
-import SpectatorListScreen from './component/screens/SpectatorListScreen';
 
 const RegisterScreen = React.lazy(() => import('./component/screens/RegisterScreen'));
 const WaitScreen = React.lazy(() => import('./component/screens/WaitScreen'));
 const VolunteerScreen = React.lazy(() => import('./component/screens/VolunteerScreen'));
 const SpectatorScreen = React.lazy(() => import('./component/screens/SpectatorScreen'));
 const VolunteerListScreen = React.lazy(() => import('./component/screens/VolunteerListScreen'));
+const SpectatorListScreen = React.lazy(() => import('./component/screens/SpectatorListScreen'));
 
 const theme = createTheme({
   palette: {
@@ -32,11 +32,11 @@ const App = () => {
           <Routes>
             <Route path="/" element={<RootScreen />} />
             <Route path="register" element={<RegisterScreen />} />
-            <Route path="volunteer/:event" element={<VolunteerScreen />} />
-            <Route path="spectator/:event" element={<SpectatorScreen />} />
+            <Route path="volunteer/:eventId" element={<VolunteerScreen />} />
+            <Route path="spectator/:eventId" element={<SpectatorScreen />} />
 
-            <Route path="consoleadmin/volunteer/:event" element={<VolunteerListScreen />} />
-            <Route path="consoleadmin/spectator/:event" element={<SpectatorListScreen />} />
+            <Route path="consoleadmin/volunteer/:eventId" element={<VolunteerListScreen />} />
+            <Route path="consoleadmin/spectator/:eventId" element={<SpectatorListScreen />} />
             <Route path="wait" element={<WaitScreen />} />
             <Route path="*" element={<NoMatch />} />
           </Routes>

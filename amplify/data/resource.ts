@@ -40,6 +40,7 @@ const schema = a.schema({
   }).authorization((allow) => [allow.guest()]),
 
   Volunteer: a.model({
+    eventId: a.integer(),
     firstName: a.string(),
     lastName: a.string(),
     email: a.string(),
@@ -56,6 +57,7 @@ const schema = a.schema({
   }).authorization((allow) => [allow.guest()]),
 
   Spectator: a.model({
+    eventId: a.integer(),
     firstName: a.string(),
     lastName: a.string(),
     email: a.string(),
