@@ -9,6 +9,11 @@ import { createTheme, ThemeProvider } from '@mui/material';
 const RegisterScreen = React.lazy(() => import('./component/screens/RegisterScreen'));
 const ProcessScreen = React.lazy(() => import('./component/screens/ProcessScreen'));
 const WaitScreen = React.lazy(() => import('./component/screens/WaitScreen'));
+const PuzzleEventList = React.lazy(() => import('./component/PuzzleEventList'));
+
+const VolunteerScreen = React.lazy(() => import('./component/screens/VolunteerScreen'));
+const SpectatorScreen = React.lazy(() => import('./component/screens/SpectatorScreen'));
+const VolunteerListScreen = React.lazy(() => import('./component/screens/VolunteerListScreen'));
 
 const theme = createTheme({
   palette: {
@@ -28,8 +33,11 @@ const App = () => {
         <Suspense>
           <Routes>
             <Route path="/" element={<RootScreen />} />
-            <Route path="test" element={<ProcessScreen />} />
             <Route path="register" element={<RegisterScreen />} />
+            <Route path="volunteer/:event" element={<VolunteerScreen />} />
+            <Route path="spectator/:event" element={<SpectatorScreen />} />
+
+            <Route path="consoleadmin/volunteer/:event" element={<VolunteerListScreen />} />
             <Route path="wait" element={<WaitScreen />} />
             <Route path="*" element={<NoMatch />} />
           </Routes>

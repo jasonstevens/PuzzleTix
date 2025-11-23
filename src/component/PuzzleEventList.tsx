@@ -7,26 +7,26 @@ const client = generateClient<Schema>();
 export default function TodoList() {
   const [todos, setTodos] = useState<Schema["PuzzleEvent"]["type"][]>([]);
 
-  const fetchTodos = async () => {
+  const fetchData = async () => {
     const { data: items } = await client.models.PuzzleEvent.list();
     setTodos(items);
   };
 
   useEffect(() => {
-    fetchTodos();
+    fetchData();
   }, []);
 
-  const createTodo = async () => {
+  const createData = async () => {
     await client.models.PuzzleEvent.create({
       name: window.prompt("Event?"),
     });
 
-    fetchTodos();
+    fetchData();
   }
 
   return (
     <div>
-      <button onClick={createTodo}>Create Event</button>
+      <button onClick={createData}>Create Event</button>
       <ul>
         {todos.map(({ id, name }) => (
           <li key={id}>{name}</li>

@@ -39,6 +39,20 @@ const schema = a.schema({
     user: a.string(),
   }).authorization((allow) => [allow.guest()]),
 
+  Volunteer: a.model({
+    firstName: a.string(),
+    lastName: a.string(),
+    email: a.string(),
+    phone: a.string(),
+    hasShirt: a.boolean(),
+    shirt: a.string(),
+    allergies: a.string(),
+    comments: a.string(),
+    div1: a.boolean(),
+    div2: a.boolean(),
+    div3: a.boolean(),
+  }).authorization((allow) => [allow.guest()]),
+
 });
 
 export type Schema = ClientSchema<typeof schema>;
