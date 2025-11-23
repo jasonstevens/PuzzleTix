@@ -48,9 +48,21 @@ const schema = a.schema({
     shirt: a.string(),
     allergies: a.string(),
     comments: a.string(),
+    day1: a.boolean(),
+    day2: a.boolean(),
     div1: a.boolean(),
     div2: a.boolean(),
     div3: a.boolean(),
+  }).authorization((allow) => [allow.guest()]),
+
+  Spectator: a.model({
+    firstName: a.string(),
+    lastName: a.string(),
+    email: a.string(),
+    phone: a.string(),
+    reason: a.string(),
+    comments: a.string(),
+    seats: a.integer(),
   }).authorization((allow) => [allow.guest()]),
 
 });

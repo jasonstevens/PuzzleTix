@@ -101,72 +101,64 @@ export default function Register() {
         </Box>
 
         {!submitted ?
+          <Stack direction="column" spacing={2}>
+            <Stack direction="column" spacing={1} textAlign={"left"}>
+              <Divider />
 
-          <form>
+              <Typography variant="h5">Volunteer Details</Typography>
+              <FormGroup>
+                <Stack direction="row" spacing={1}>
 
-            <Stack direction="column" spacing={2}>
-              <Stack direction="column" spacing={1} textAlign={"left"}>
-                <Divider />
+                  <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
+                  <TextField name="firstName" label="First Name" required size='small' onChange={handleChange} />
+                  <TextField name="lastName" label="Last Name(s)" required size='small' onChange={handleChange} />
+                </Stack>
+              </FormGroup>
+              <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <EmailIcon sx={{ color: 'action.active', mr: 1, my: 0.75 }} />
+                <TextField name="email" label="E-Mail Address" required size='small' sx={{ width: '100%' }} onChange={handleChange} />
+              </Box>
+              <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <PhoneIcon sx={{ color: 'action.active', mr: 1, my: 0.75 }} />
+                <TextField name="phone" label="Contact Number" size='small' sx={{ width: '100%' }} onChange={handleChange} />
+              </Box>
 
-                <Typography variant="h5">Volunteer Details</Typography>
-                <FormGroup>
-                  <Stack direction="row" spacing={1}>
+              <Typography variant="h5">Other Information</Typography>
 
-                    <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
-                    <TextField name="firstName" label="First Name" required size='small' onChange={handleChange} />
-                    <TextField name="lastName" label="Last Name(s)" required size='small' onChange={handleChange} />
-                  </Stack>
-                </FormGroup>
-                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                  <EmailIcon sx={{ color: 'action.active', mr: 1, my: 0.75 }} />
-                  <TextField name="email" label="E-Mail Address" required size='small' sx={{ width: '100%' }} onChange={handleChange} />
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                  <PhoneIcon sx={{ color: 'action.active', mr: 1, my: 0.75 }} />
-                  <TextField name="phone" label="Contact Number" size='small' sx={{ width: '100%' }} onChange={handleChange} />
-                </Box>
+              <FormControlLabel control={<Checkbox name="hasShirt" onChange={handleChecked} />} label="I already own a UKJPA Volunteer T-Shirt" sx={{ height: '30px' }} />
 
-                <Typography variant="h5">Other Information</Typography>
+              <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <CheckroomIcon sx={{ color: 'action.active', mr: 1, my: 2 }} />
+                <FormControl sx={{ width: '100%' }}>
+                  <InputLabel>T-Shirt Size</InputLabel>
+                  <Select name="shirt" variant="outlined" label="T-Shirt Size" required onChange={handleChange} defaultValue=''>
+                    {shirtSizes.map((shirt) => (<MenuItem value={shirt.key}>{shirt.description}</MenuItem>))}
+                  </Select>
+                </FormControl>
+              </Box>
 
-                <FormControlLabel control={<Checkbox name="hasShirt" onChange={handleChecked} />} label="I already have a UKJPA Volunteer Shirt" sx={{ height: '30px' }} />
+              <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <RestaurantIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
+                <TextField name="allergies" label="Food Allergies" size='small' multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
+              </Box>
 
-                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                  <CheckroomIcon sx={{ color: 'action.active', mr: 1, my: 2 }} />
-                  <FormControl sx={{ width: '100%' }}>
-                    <InputLabel>T-Shirt Size</InputLabel>
-                    <Select name="shirt" variant="outlined" label="T-Shirt Size" required onChange={handleChange} value=''>
+              <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <CommentIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
+                <TextField name="comments" label="Additional Comments" size='small' multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
+              </Box>
 
-                      {shirtSizes.map((shirt) => (
-                        <MenuItem value={shirt.key}>{shirt.description}</MenuItem>
-                      ))}
+              <Typography variant="h5">Are you Competing?</Typography>
 
-                    </Select>
-                  </FormControl>
-                </Box>
+              {divs.map(div => (
+                <FormControlLabel control={<Checkbox name={"div" + div.id} onChange={handleChecked} />} label={div.name + " Division"} sx={{ height: '30px' }} />
+              ))}
 
-                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                  <RestaurantIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
-                  <TextField name="allergies" label="Food Allergies" size='small' multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
-                </Box>
+              <Box sx={{ textAlign: "center" }} alignItems='center'>
+                <Button sx={{ m: 1 }} onClick={submit} variant="contained" disabled={formFilled()}>Submit</Button>
+              </Box>
 
-                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                  <CommentIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
-                  <TextField name="comments" label="Additional Comments" size='small' multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
-                </Box>
-
-                <Typography variant="h5">Are you Competing?</Typography>
-
-                {divs.map(div => (
-                  <FormControlLabel control={<Checkbox name={"div" + div.id} onChange={handleChecked} />} label={div.name + " Division"} sx={{ height: '30px' }} />
-                ))}
-
-                <Box sx={{ textAlign: "center" }} alignItems='center'>
-                  <Button sx={{ m: 1 }} onClick={submit} variant="contained" disabled={formFilled()}>Submit</Button>
-                </Box>
-
-              </Stack>
             </Stack>
-          </form>
+          </Stack>
           :
           <>
             <br />

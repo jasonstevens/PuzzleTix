@@ -12,19 +12,9 @@ export default function VolunteerListScreen() {
     setData(items);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useEffect(() => { fetchData(); }, []);
 
   return (
-    <div>
-      {JSON.stringify(data)}
-
-      {/* <ul>
-        {data.map(({ id, firstName }) => (
-          <li key={id}>{id} {firstName}</li>
-        ))}
-      </ul> */}
-    </div>
+    <>{JSON.stringify(data)}</>
   );
 }
