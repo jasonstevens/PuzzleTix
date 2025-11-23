@@ -29,7 +29,7 @@ type EventParams = {
 const reasons = [
   { key: 'F', description: "I'm watching friends or family compete" },
   { key: 'C', description: "I'm interested in competing in Speed Puzzling" },
-  { key: 'I', description: "I'm interested in finding out more about Speed Puzzling" },
+  { key: 'I', description: "I want to find out more about Speed Puzzling" },
   { key: 'O', description: "Other (please comment below)" },
 ]
 
@@ -119,11 +119,11 @@ export default function SpectatorScreen() {
                       </FormGroup>
                       <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                         <EmailIcon sx={{ color: 'action.active', mr: 1, my: 0.75 }} />
-                        <TextField name="email" label="E-Mail Address" required size='small' sx={{ width: '100%' }} onChange={handleChange} />
+                        <TextField name="email" label="E-Mail" required size='small' sx={{ width: '100%' }} onChange={handleChange} />
                       </Box>
                       <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                         <PhoneIcon sx={{ color: 'action.active', mr: 1, my: 0.75 }} />
-                        <TextField name="phone" label="Contact Number" size='small' sx={{ width: '100%' }} onChange={handleChange} />
+                        <TextField name="phone" label="Phone" size='small' sx={{ width: '100%' }} onChange={handleChange} />
                       </Box>
 
                       <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>

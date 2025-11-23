@@ -127,11 +127,11 @@ export default function VolunteerScreen() {
                   </FormGroup>
                   <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                     <EmailIcon sx={{ color: 'action.active', mr: 1, my: 0.75 }} />
-                    <TextField name="email" label="E-Mail Address" required size='small' sx={{ width: '100%' }} onChange={handleChange} />
+                    <TextField name="email" label="E-Mail" required size='small' sx={{ width: '100%' }} onChange={handleChange} />
                   </Box>
                   <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                     <PhoneIcon sx={{ color: 'action.active', mr: 1, my: 0.75 }} />
-                    <TextField name="phone" label="Contact Number" size='small' sx={{ width: '100%' }} onChange={handleChange} />
+                    <TextField name="phone" label="Phone" size='small' sx={{ width: '100%' }} onChange={handleChange} />
                   </Box>
 
                   <Typography variant="h5">Other Information</Typography>
