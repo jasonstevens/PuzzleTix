@@ -49,4 +49,16 @@ const data: PuzzleEvent[] =
       volunteers: true,
       spectators: 0,
     },
+
+    {
+      id: 0,
+      name: "Alderaan Imperial",
+      shortName: "alderaan",
+      shortLabel: "ALD",
+      organisation: 1,
+      logo: "/events/alderaan.png",
+      ready: true,
+      volunteers: true,
+      spectators: 5,
+    },
   ]
