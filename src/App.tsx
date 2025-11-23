@@ -7,10 +7,7 @@ import React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
 
 const RegisterScreen = React.lazy(() => import('./component/screens/RegisterScreen'));
-const ProcessScreen = React.lazy(() => import('./component/screens/ProcessScreen'));
 const WaitScreen = React.lazy(() => import('./component/screens/WaitScreen'));
-const PuzzleEventList = React.lazy(() => import('./component/PuzzleEventList'));
-
 const VolunteerScreen = React.lazy(() => import('./component/screens/VolunteerScreen'));
 const SpectatorScreen = React.lazy(() => import('./component/screens/SpectatorScreen'));
 const VolunteerListScreen = React.lazy(() => import('./component/screens/VolunteerListScreen'));
