@@ -115,7 +115,6 @@ export default function VolunteerScreen() {
               <Stack direction="column" spacing={2}>
                 <Stack direction="column" spacing={1} textAlign={"left"}>
                   <Divider />
-
                   <Typography variant="h5">Volunteer Details</Typography>
                   <FormGroup>
                     <Stack direction="row" spacing={1}>
@@ -134,6 +133,7 @@ export default function VolunteerScreen() {
                     <TextField name="phone" label="Phone" size='small' sx={{ width: '100%' }} onChange={handleChange} />
                   </Box>
 
+                  <Divider />
                   <Typography variant="h5">Other Information</Typography>
 
                   <FormControlLabel control={<Checkbox name="hasShirt" onChange={handleChecked} />} label="I already own a UKJPA Volunteer T-Shirt" sx={{ height: '30px' }} />
@@ -150,7 +150,7 @@ export default function VolunteerScreen() {
 
                   <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                     <RestaurantIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
-                    <TextField name="allergies" label="Food Allergies" size='small' multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
+                    <TextField name="allergies" label="Allergies" size='small' multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
                   </Box>
 
                   <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
@@ -158,6 +158,7 @@ export default function VolunteerScreen() {
                     <TextField name="comments" label="Additional Comments" size='small' multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
                   </Box>
 
+                  <Divider />
                   <Typography variant="h5">Are you Competing?</Typography>
 
                   {divs.map(div => (
