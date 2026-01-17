@@ -54,7 +54,7 @@ const schema = a.schema({
     div1: a.boolean(),
     div2: a.boolean(),
     div3: a.boolean(),
-  }).authorization((allow) => [allow.guest()]),
+  }).authorization((allow) => [allow.guest(), allow.authenticated()]),
 
   Spectator: a.model({
     eventId: a.integer(),
@@ -65,7 +65,32 @@ const schema = a.schema({
     reason: a.string(),
     comments: a.string(),
     seats: a.integer(),
-  }).authorization((allow) => [allow.guest()]),
+    displayName: a.boolean(),
+  }).authorization((allow) => [allow.guest(), allow.authenticated()]),
+
+  Foundling: a.model({
+    userId: a.string(),
+    displayName: a.string(),
+    lastName: a.string(),
+  }).authorization((allow) => [allow.guest(), allow.authenticated()]),
+
+  FoundlingEvent: a.model({
+    foundlingId: a.string(),
+    eventId: a.string(),
+    comments: a.string(),
+  }).authorization((allow) => [allow.guest(), allow.authenticated()]),
+
+  FoundlingResponse: a.model({
+    foundlingId: a.string(),
+    eventId: a.integer(),
+    firstName: a.string(),
+    lastName: a.string(),
+    email: a.string(),
+    phone: a.string(),
+    reason: a.string(),
+    comments: a.string(),
+    seats: a.integer(),
+  }).authorization((allow) => [allow.guest(), allow.authenticated()]),
 
 });
 

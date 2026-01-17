@@ -6,10 +6,14 @@ import NoMatch from './component/NoMatch';
 import React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
 
+const Auth = React.lazy(() => import('./component/core/Auth'));
+const Nav = React.lazy(() => import('./component/core/Nav'));
 const RegisterScreen = React.lazy(() => import('./component/screens/RegisterScreen'));
 const WaitScreen = React.lazy(() => import('./component/screens/WaitScreen'));
 const VolunteerScreen = React.lazy(() => import('./component/screens/VolunteerScreen'));
 const SpectatorScreen = React.lazy(() => import('./component/screens/SpectatorScreen'));
+const FinderScreen = React.lazy(() => import('./component/screens/FinderScreen'));
+const FinderEventScreen = React.lazy(() => import('./component/screens/FinderEventScreen'));
 const VolunteerListScreen = React.lazy(() => import('./component/screens/VolunteerListScreen'));
 const SpectatorListScreen = React.lazy(() => import('./component/screens/SpectatorListScreen'));
 
@@ -37,6 +41,14 @@ const App = () => {
 
             <Route path="consoleadmin/volunteer/:eventId" element={<VolunteerListScreen />} />
             <Route path="consoleadmin/spectator/:eventId" element={<SpectatorListScreen />} />
+
+            <Route path="/finder" element={<Auth />}>
+              <Route element={<Nav />}>
+                <Route path="" element={<FinderScreen />} />
+                <Route path=":eventId" element={<FinderEventScreen />} />
+              </Route>
+            </Route>
+
             <Route path="wait" element={<WaitScreen />} />
             <Route path="*" element={<NoMatch />} />
           </Routes>
