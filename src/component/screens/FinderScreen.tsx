@@ -1,29 +1,25 @@
 import {
-  Box, Button, FormControl, FormGroup, Stack, TextField, Typography, Divider, Checkbox, FormControlLabel,
-  Select, MenuItem, Paper, InputLabel
+  Box, Button, FormGroup, Stack, TextField, Typography, Divider, Checkbox, FormControlLabel, Paper,
 } from "@mui/material";
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
-import CheckroomIcon from '@mui/icons-material/Checkroom';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import CommentIcon from '@mui/icons-material/Comment';
 
 import logo from '../../assets/puzzletix-white.svg'
 
-import { getEvent, type PuzzleEvent } from '../data/PuzzleEvent';
-
 import type { Schema } from "../../../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
-import { useState } from "react";
-import { useParams } from "react-router";
+import { useEffect, useState } from "react";
+
+import { useAuthenticator } from '@aws-amplify/ui-react';
+
+import { Amplify } from 'aws-amplify';
+import outputs from '../../../amplify_outputs.json';
+
+Amplify.configure(outputs)
 
 const client = generateClient<Schema>();
-
-type EventParams = {
-  eventId: string;
-}
 
 interface Division {
   id: number;
@@ -32,15 +28,6 @@ interface Division {
   type: number;
 }
 
-const shirtSizes = [
-  { key: 'XS', description: "Extra Small" },
-  { key: 'S', description: "Small" },
-  { key: 'M', description: "Medium" },
-  { key: 'L', description: "Large" },
-  { key: 'XL', description: "Extra Large" },
-  { key: '2XL', description: "2X Large" },
-  { key: '3XL', description: "3X Large" }]
-
 const divs: Division[] = [
   { id: 1, name: "Solo", description: "Complete a puzzle as an individual.", type: 1 },
   { id: 2, name: "Pairs", description: "Complete a puzzle as a pair. Only one ticket required per pair.", type: 2 },
@@ -48,40 +35,58 @@ const divs: Division[] = [
 ];
 
 export default function VolunteerScreen() {
-  const { eventId } = useParams<EventParams>();
 
-  let puzzleEvent: PuzzleEvent | undefined = undefined;
-  if (eventId) puzzleEvent = getEvent(eventId);
-
-  const [submitted, setSubmitted] = useState(false);
+  const { user } = useAuthenticator((context) => [context.user]);
 
   const [formData, setFormData] = useState({
-    eventId: puzzleEvent ? puzzleEvent.id : -1,
+    id: '',
+    loginId: '',
     firstName: '',
     lastName: '',
-    email: '',
-    phone: '',
-    hasShirt: false,
-    shirt: '',
-    allergies: '',
-    comments: '',
-    div1: false,
-    div2: false,
-    div3: false
+    displayName: '',
   });
 
+  const fetchData = async () => {
+    console.log('Load')
+    const { data: items, errors } = await client.models.Foundling.listFoundlingByLoginId({ loginId: user!.signInDetails!.loginId! })
+
+    if (errors) {
+      console.error("Error:", errors);
+      console.log(items);
+      for (const error of errors) {
+        console.error(error.message);
+      }
+      return;
+    }
+
+    if (items?.length > 0) {
+      const foundling = items[0]!;
+      console.log('Setting');
+      console.log(foundling);
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        id: foundling.id,
+        loginId: foundling.loginId ? foundling.loginId : '',
+        firstName: foundling.firstName ? foundling.firstName : '',
+        lastName: foundling.lastName ? foundling.lastName : '',
+        displayName: foundling.displayName ? foundling.displayName : '',
+      }));
+    }
+
+  };
+
+  useEffect(() => { fetchData(); }, []);
+
   const formFilled = (): boolean => {
-    return !(
-      formData.firstName != ''
-      && formData.lastName != ''
-      && formData.email != ''
+    return !(formData
+      && formData.firstName != ''
     );
   }
 
   const handleChange = (event: { target: { name: any; value: any }; }) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
-      ...prevFormData,
+      ...prevFormData!,
       [name]: value,
     }));
   };
@@ -89,105 +94,107 @@ export default function VolunteerScreen() {
   const handleChecked = (event: { target: { name: any; checked: any }; }) => {
     const { name, checked } = event.target;
     setFormData((prevFormData) => ({
-      ...prevFormData,
+      ...prevFormData!,
       [name]: checked,
     }));
   };
 
   const submit = async () => {
-    await client.models.Volunteer.create(formData);
-    setSubmitted(true);
+    console.log(formData)
+    if (formData?.id) {
+      console.log("Update")
+      const { data, errors } = await client.models.Foundling.update(formData);
+
+      if (errors) {
+        console.error("Error:", errors);
+        console.log(data);
+        for (const error of errors) {
+          console.error(error.message);
+        }
+        return;
+      }
+
+    } else {
+      console.log("Creating")
+      formData!.loginId = user.signInDetails!.loginId!;
+      console.log(formData)
+      const { data, errors } = await client.models.Foundling.create(formData!);
+
+      if (errors) {
+        console.error("Error:", errors);
+        console.log(data);
+        for (const error of errors) {
+          console.error(error.message);
+        }
+        return;
+      }
+
+
+    }
   }
 
   return (
     <>
-      {puzzleEvent != undefined ?
-        <>
-          <Box component="img" src={logo} sx={{ maxWidth: "300px" }} />
-          <Box component="img" src={puzzleEvent.logo} sx={{ maxWidth: "350px" }} />
-          <Paper sx={{ padding: 1, paddingTop: 0, backgroundColor: "#ffffffbb", borderRadius: '15px' }}>
+      <Box component="img" src={logo} sx={{ maxWidth: "300px" }} />
+      <Paper sx={{ padding: 1, paddingTop: 0, backgroundColor: "#ffffffbb", borderRadius: '15px' }}>
 
-            <Box sx={{ textAlign: "center" }} alignItems='center'>
-              <Button sx={{ m: 1 }} href="http://ukjpa.org" variant="contained">Back to UKJPA</Button>
+        <Box sx={{ textAlign: "center" }} alignItems='center'>
+          <Button sx={{ m: 1 }} href="http://ukjpa.org" variant="contained">Back to UKJPA</Button>
+        </Box>
+
+        <Stack direction="column" spacing={2}>
+          <Stack direction="column" spacing={1} textAlign={"left"}>
+            <Divider />
+            <Typography variant="h5">Finder Details</Typography>
+            <FormGroup>
+              <Stack direction="row" spacing={1}>
+
+                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
+                <TextField name="firstName" label="First Name" required size='small' value={formData.firstName} onChange={handleChange} />
+                <TextField name="lastName" label="Last Name(s)" size='small' value={formData.lastName} onChange={handleChange} />
+              </Stack>
+            </FormGroup>
+
+            <FormGroup>
+              <Stack direction="row" spacing={1}>
+
+                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
+                <TextField name="firstName" label="Display Name" required size='small' value={formData.displayName} onChange={handleChange} />
+              </Stack>
+            </FormGroup>
+
+
+
+            <Divider />
+            <Typography variant="h5">Other Information</Typography>
+
+            <FormControlLabel control={<Checkbox name="hasShirt" onChange={handleChecked} />} label="I already own a UKJPA Volunteer T-Shirt" sx={{ height: '30px' }} />
+
+            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+              <RestaurantIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
+              <TextField name="allergies" label="Allergies" size='small' multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
             </Box>
 
-            {!submitted ?
-              <Stack direction="column" spacing={2}>
-                <Stack direction="column" spacing={1} textAlign={"left"}>
-                  <Divider />
-                  <Typography variant="h5">Volunteer Details</Typography>
-                  <FormGroup>
-                    <Stack direction="row" spacing={1}>
+            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+              <CommentIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
+              <TextField name="comments" label="Additional Comments" size='small' multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
+            </Box>
 
-                      <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
-                      <TextField name="firstName" label="First Name" required size='small' onChange={handleChange} />
-                      <TextField name="lastName" label="Last Name(s)" required size='small' onChange={handleChange} />
-                    </Stack>
-                  </FormGroup>
-                  <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <EmailIcon sx={{ color: 'action.active', mr: 1, my: 0.75 }} />
-                    <TextField name="email" label="E-Mail" required size='small' sx={{ width: '100%' }} onChange={handleChange} />
-                  </Box>
-                  <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <PhoneIcon sx={{ color: 'action.active', mr: 1, my: 0.75 }} />
-                    <TextField name="phone" label="Phone" size='small' sx={{ width: '100%' }} onChange={handleChange} />
-                  </Box>
+            <Divider />
+            <Typography variant="h5">Are you Competing?</Typography>
 
-                  <Divider />
-                  <Typography variant="h5">Other Information</Typography>
+            {divs.map(div => (
+              <FormControlLabel control={<Checkbox name={"div" + div.id} onChange={handleChecked} />} label={div.name + " Division"} sx={{ height: '30px' }} />
+            ))}
 
-                  <FormControlLabel control={<Checkbox name="hasShirt" onChange={handleChecked} />} label="I already own a UKJPA Volunteer T-Shirt" sx={{ height: '30px' }} />
+            <Box sx={{ textAlign: "center" }} alignItems='center'>
+              <Button sx={{ m: 1 }} onClick={submit} variant="contained" disabled={formFilled()}>Save</Button>
+            </Box>
 
-                  <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <CheckroomIcon sx={{ color: 'action.active', mr: 1, my: 2 }} />
-                    <FormControl sx={{ width: '100%' }}>
-                      <InputLabel>T-Shirt Size</InputLabel>
-                      <Select name="shirt" variant="outlined" label="T-Shirt Size" required onChange={handleChange} defaultValue=''>
-                        {shirtSizes.map((shirt) => (<MenuItem value={shirt.key}>{shirt.description}</MenuItem>))}
-                      </Select>
-                    </FormControl>
-                  </Box>
+          </Stack>
+        </Stack>
+      </Paper>
 
-                  <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <RestaurantIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
-                    <TextField name="allergies" label="Allergies" size='small' multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
-                  </Box>
-
-                  <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <CommentIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
-                    <TextField name="comments" label="Additional Comments" size='small' multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
-                  </Box>
-
-                  <Divider />
-                  <Typography variant="h5">Are you Competing?</Typography>
-
-                  {divs.map(div => (
-                    <FormControlLabel control={<Checkbox name={"div" + div.id} onChange={handleChecked} />} label={div.name + " Division"} sx={{ height: '30px' }} />
-                  ))}
-
-                  <Box sx={{ textAlign: "center" }} alignItems='center'>
-                    <Button sx={{ m: 1 }} onClick={submit} variant="contained" disabled={formFilled()}>Submit</Button>
-                  </Box>
-
-                </Stack>
-              </Stack>
-              :
-              <>
-                <br />
-                <Typography variant="h5">Thanks for your Submission!</Typography>
-                <br />
-                <Typography variant="h6">We will contact you in the near future.</Typography>
-              </>
-            }
-          </Paper>
-        </>
-        :
-        <>
-          <Box component="img" src={logo} sx={{ width: "350px" }} />
-          <br /><br />
-          <Typography variant="h5">These are not the droids you're looking for.</Typography>
-        </>
-      }
     </>
   );
 };

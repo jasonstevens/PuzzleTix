@@ -16,6 +16,7 @@ const FinderScreen = React.lazy(() => import('./component/screens/FinderScreen')
 const FinderEventScreen = React.lazy(() => import('./component/screens/FinderEventScreen'));
 const VolunteerListScreen = React.lazy(() => import('./component/screens/VolunteerListScreen'));
 const SpectatorListScreen = React.lazy(() => import('./component/screens/SpectatorListScreen'));
+const FoundlingListScreen = React.lazy(() => import('./component/screens/FoundlingListScreen'));
 
 const theme = createTheme({
   palette: {
@@ -41,6 +42,7 @@ const App = () => {
 
             <Route path="consoleadmin/volunteer/:eventId" element={<VolunteerListScreen />} />
             <Route path="consoleadmin/spectator/:eventId" element={<SpectatorListScreen />} />
+            <Route path="consoleadmin/foundling" element={<FoundlingListScreen />} />
 
             <Route path="/finder" element={<Auth />}>
               <Route element={<Nav />}>

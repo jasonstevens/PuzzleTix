@@ -3,8 +3,9 @@ import { Outlet } from 'react-router';
 
 import LogoutIcon from '@mui/icons-material/Logout';
 
-import { useAuthenticator } from '@aws-amplify/ui-react';
 import { ThemeProvider, type Theme } from '@aws-amplify/ui-react';
+
+import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 
@@ -81,23 +82,18 @@ export default function Nav() {
         </Toolbar>
       </AppBar>
 
-      <Container sx={{ marginTop: 10 }}>
-        <Outlet />
-      </Container>
 
-      {!isAuth() &&
-        <Container sx={{ paddingTop: '200px' }} maxWidth='sm'>
-          <ThemeProvider theme={sTheme}>
 
-            <Paper elevation={2}>
-              <Authenticator>
-                <Typography variant='h4'>
-                  R2D2, you know better than to trust a strange computer.
-                </Typography>
-              </Authenticator>
-            </Paper>
-          </ThemeProvider>
+      {isAuth() ?
+        <Container sx={{ marginTop: 10 }}>
+          <Outlet />
         </Container>
+        :
+        <ThemeProvider theme={sTheme}>
+
+          <Authenticator>
+          </Authenticator>
+        </ThemeProvider>
       }
 
     </Box>
