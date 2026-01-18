@@ -13,7 +13,6 @@ const WaitScreen = React.lazy(() => import('./component/screens/WaitScreen'));
 const VolunteerScreen = React.lazy(() => import('./component/screens/VolunteerScreen'));
 const SpectatorScreen = React.lazy(() => import('./component/screens/SpectatorScreen'));
 const FinderScreen = React.lazy(() => import('./component/screens/FinderScreen'));
-const FinderEventScreen = React.lazy(() => import('./component/screens/FinderEventScreen'));
 const VolunteerListScreen = React.lazy(() => import('./component/screens/VolunteerListScreen'));
 const SpectatorListScreen = React.lazy(() => import('./component/screens/SpectatorListScreen'));
 const FoundlingListScreen = React.lazy(() => import('./component/screens/FoundlingListScreen'));
@@ -47,7 +46,6 @@ const App = () => {
             <Route path="/finder" element={<Auth />}>
               <Route element={<Nav />}>
                 <Route path="" element={<FinderScreen />} />
-                <Route path=":eventId" element={<FinderEventScreen />} />
               </Route>
             </Route>
 

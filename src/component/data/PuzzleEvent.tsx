@@ -15,6 +15,8 @@ export interface PuzzleEvent {
   format?: number; // Blank / 0 = Normal, 1 = Online
   volunteers: boolean;
   spectators: number;
+  finder: boolean;
+  divisions: number[];
 }
 
 export const getEvents = () => {
@@ -37,17 +39,21 @@ const data: PuzzleEvent[] =
       ready: true,
       volunteers: true,
       spectators: 3,
+      finder: true,
+      divisions: [1, 2, 4],
     },
     {
       id: 11,
       name: "UK Nationals 2026",
       shortName: "uk2026",
-      shortLabel: "UKA",
+      shortLabel: "UKM",
       organisation: 1,
       logo: "/events/uknationals2026.png",
       ready: true,
       volunteers: true,
       spectators: 0,
+      finder: true,
+      divisions: [1, 2, 4],
     },
 
     {
@@ -60,5 +66,7 @@ const data: PuzzleEvent[] =
       ready: true,
       volunteers: true,
       spectators: 5,
+      finder: false,
+      divisions: [1, 2, 4],
     },
   ]

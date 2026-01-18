@@ -1,9 +1,6 @@
-import {
-  Box, Button, FormGroup, Stack, TextField, Typography, Divider, Checkbox, FormControlLabel, Paper,
-} from "@mui/material";
+import { Box, Button, FormGroup, Stack, TextField, Typography, Divider, Paper } from "@mui/material";
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import RestaurantIcon from '@mui/icons-material/Restaurant';
 import CommentIcon from '@mui/icons-material/Comment';
 
 import logo from '../../assets/puzzletix-white.svg'
@@ -16,23 +13,11 @@ import { useAuthenticator } from '@aws-amplify/ui-react';
 
 import { Amplify } from 'aws-amplify';
 import outputs from '../../../amplify_outputs.json';
+import FinderEvents from "../foundling/FinderEvents";
 
 Amplify.configure(outputs)
 
 const client = generateClient<Schema>();
-
-interface Division {
-  id: number;
-  name: string;
-  description?: string;
-  type: number;
-}
-
-const divs: Division[] = [
-  { id: 1, name: "Solo", description: "Complete a puzzle as an individual.", type: 1 },
-  { id: 2, name: "Pairs", description: "Complete a puzzle as a pair. Only one ticket required per pair.", type: 2 },
-  { id: 3, name: "Teams", description: "Complete a puzzle as a team of 3 or 4.  Only one ticket required per team.", type: 4 }
-];
 
 export default function VolunteerScreen() {
 
@@ -43,7 +28,9 @@ export default function VolunteerScreen() {
     loginId: '',
     firstName: '',
     lastName: '',
+    performance: '',
     displayName: '',
+    goal: '',
   });
 
   const fetchData = async () => {
@@ -70,6 +57,9 @@ export default function VolunteerScreen() {
         firstName: foundling.firstName ? foundling.firstName : '',
         lastName: foundling.lastName ? foundling.lastName : '',
         displayName: foundling.displayName ? foundling.displayName : '',
+        goal: foundling.goal ? foundling.goal : '',
+        performance: foundling.performance ? foundling.performance : '',
+
       }));
     }
 
@@ -128,8 +118,6 @@ export default function VolunteerScreen() {
         }
         return;
       }
-
-
     }
   }
 
@@ -138,17 +126,13 @@ export default function VolunteerScreen() {
       <Box component="img" src={logo} sx={{ maxWidth: "300px" }} />
       <Paper sx={{ padding: 1, paddingTop: 0, backgroundColor: "#ffffffbb", borderRadius: '15px' }}>
 
-        <Box sx={{ textAlign: "center" }} alignItems='center'>
-          <Button sx={{ m: 1 }} href="http://ukjpa.org" variant="contained">Back to UKJPA</Button>
-        </Box>
-
         <Stack direction="column" spacing={2}>
           <Stack direction="column" spacing={1} textAlign={"left"}>
             <Divider />
-            <Typography variant="h5">Finder Details</Typography>
+            <Typography variant="h5">Finder Profile</Typography>
+
             <FormGroup>
               <Stack direction="row" spacing={1}>
-
                 <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
                 <TextField name="firstName" label="First Name" required size='small' value={formData.firstName} onChange={handleChange} />
                 <TextField name="lastName" label="Last Name(s)" size='small' value={formData.lastName} onChange={handleChange} />
@@ -157,39 +141,22 @@ export default function VolunteerScreen() {
 
             <FormGroup>
               <Stack direction="row" spacing={1}>
-
                 <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
-                <TextField name="firstName" label="Display Name" required size='small' value={formData.displayName} onChange={handleChange} />
+                <TextField name="displayName" label="Display Name" required size='small' value={formData.displayName} onChange={handleChange} />
               </Stack>
             </FormGroup>
 
-
-
-            <Divider />
-            <Typography variant="h5">Other Information</Typography>
-
-            <FormControlLabel control={<Checkbox name="hasShirt" onChange={handleChecked} />} label="I already own a UKJPA Volunteer T-Shirt" sx={{ height: '30px' }} />
-
-            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-              <RestaurantIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
-              <TextField name="allergies" label="Allergies" size='small' multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
-            </Box>
-
             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
               <CommentIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
-              <TextField name="comments" label="Additional Comments" size='small' multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
+              <TextField name="goal" label="Additional Comments" size='small' value={formData.goal} multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
             </Box>
-
-            <Divider />
-            <Typography variant="h5">Are you Competing?</Typography>
-
-            {divs.map(div => (
-              <FormControlLabel control={<Checkbox name={"div" + div.id} onChange={handleChecked} />} label={div.name + " Division"} sx={{ height: '30px' }} />
-            ))}
-
             <Box sx={{ textAlign: "center" }} alignItems='center'>
               <Button sx={{ m: 1 }} onClick={submit} variant="contained" disabled={formFilled()}>Save</Button>
             </Box>
+
+            <Divider />
+
+            <FinderEvents foundlingId={formData.id} />
 
           </Stack>
         </Stack>
