@@ -25,7 +25,7 @@ interface FoundlingData {
 
 }
 
-export default function FinderMessageList({ foundlingId }: Params) {
+export default function FinderResponseList({ foundlingId }: Params) {
 
   const [foundlingEvents, setFoundlingEvents] = useState<FoundlingData[]>();
 

@@ -6,7 +6,7 @@ import { getEvents } from "../data/PuzzleEvent";
 import React from "react";
 import FoundlingEventPopup from "./FoundlingEventRegisterPopup";
 import FinderEventList from "./FinderEventList";
-import FinderMessageList from "./FinderMessageList";
+import FinderResponseList from "./FinderResponseList";
 
 Amplify.configure(outputs)
 
@@ -90,7 +90,7 @@ export default function FinderEvents({ foundlingId }: Params) {
         <Tab label="Other Puzzlers" />
       </Tabs>
       <CustomTabPanel value={value} index={0}>
-        <FinderMessageList foundlingId={foundlingId} />
+        <FinderResponseList foundlingId={foundlingId} />
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={1}>
