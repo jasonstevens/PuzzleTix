@@ -63,30 +63,47 @@ const schema = a.schema({
   }).authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
 
   Foundling: a.model({
+    id: a.id().required(),
     loginId: a.string().required(),
     displayName: a.string(),
     firstName: a.string(),
     lastName: a.string(),
     performance: a.string(),
     goal: a.string(),
+    foundlingEvents: a.hasMany('FoundlingEvent', 'foundlingId')
   })
     .secondaryIndexes((index) => [index("loginId")])
     .authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
 
   FoundlingEvent: a.model({
+    id: a.id().required(),
     foundlingId: a.id().required(),
-    eventId: a.string().required(),
+    eventId: a.integer().required(),
     seeking: a.string(),
+    pair: a.boolean(),
+    team: a.boolean(),
     comments: a.string(),
-  }).authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
+    foundling: a.belongsTo('Foundling', 'foundlingId')
+  })
+    .secondaryIndexes((index) => [
+      index("foundlingId").sortKeys(["eventId"]).queryField("listFoundlingEventsByFoundling"),
+      index("eventId").queryField("listFoundlingEventsByEvent")
+    ])
+    .authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
 
   FoundlingResponse: a.model({
-    foundlingId: a.id(),
-    eventId: a.integer(),
-    responderId: a.id(),
-    comments: a.string(),
-    contact: a.string()
-  }).authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
+    foundlingId: a.id().required(),
+    foundlingEventId: a.id().required(),
+    eventId: a.integer().required(),
+    responderId: a.id().required(),
+    comments: a.string()
+  })
+    .secondaryIndexes((index) => [
+      index("eventId").queryField("listFoundlingResponsesByEvent"),
+      index("foundlingId").queryField("listFoundlingResponsesByFoundling")]
+
+    )
+    .authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
 
 });
 

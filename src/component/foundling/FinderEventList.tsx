@@ -24,15 +24,43 @@ interface Params {
   eventId: number;
 }
 
+interface FoundlingData {
+  id: string,
+  pair?: boolean,
+  team?: boolean,
+  foundlingId: string,
+  displayName?: string,
+  comments?: string,
+
+}
+
 export default function FinderEventList({ foundlingId, eventId }: Params) {
 
-  const [foundlingEvents, setFoundlingEvents] = useState<FoundlingEvent[]>();
+  const [foundlingEvents, setFoundlingEvents] = useState<FoundlingData[]>();
 
   const fetchData = async () => {
     console.log('Load')
-    const { data: foundlingEvents, errors: eventErrors } = await client.models.FoundlingEvent.listFoundlingEventsByEvent({ eventId: eventId })
+    const { data: foundlingEvents, errors: eventErrors } = await client.models.FoundlingEvent.listFoundlingEventsByEvent({ eventId: eventId },
+      { selectionSet: ['id', 'pair', 'team', 'foundlingId', 'comments', 'foundling.displayName'] },
+    )
 
-    setFoundlingEvents(foundlingEvents);
+    const f = foundlingEvents.map(thisRec => {
+      const z: FoundlingData = {
+        id: thisRec.id,
+        pair: thisRec.pair ? thisRec.pair : false,
+        team: thisRec.team ? thisRec.team : false,
+        comments: thisRec.comments ? thisRec.comments : '',
+        foundlingId: thisRec.foundlingId,
+        displayName: thisRec.foundling.displayName ? thisRec.foundling?.displayName : 'Woot',
+      }
+      return z;
+    });
+
+
+
+    setFoundlingEvents(f);
+
+
 
     if (eventErrors) {
       console.error("Error:", eventErrors);
@@ -56,7 +84,7 @@ export default function FinderEventList({ foundlingId, eventId }: Params) {
               <Grid container size={12} sx={{ border: 0 }}>
                 <Grid size={9} textAlign={"left"}>
                   <Stack direction="column" spacing={1}>
-                    <Typography sx={{ fontWeight: 800 }}>{thisEvent.foundlingId}</Typography>
+                    <Typography sx={{ fontWeight: 800 }}>{thisEvent.displayName}</Typography>
                   </Stack>
                 </Grid>
                 <Grid size={3} sx={{ border: 0 }}>
@@ -78,7 +106,7 @@ export default function FinderEventList({ foundlingId, eventId }: Params) {
             </Grid>
 
             <Grid size={4}>
-              <FoundlingResponsePopup eventId={thisEvent.eventId} foundlingId={thisEvent.foundlingId} foundlingEventId={thisEvent.id} currentFoundlingId={foundlingId} />
+              <FoundlingResponsePopup eventId={eventId} foundlingId={thisEvent.foundlingId} foundlingEventId={thisEvent.id} currentFoundlingId={foundlingId} />
             </Grid>
 
           </>
