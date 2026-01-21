@@ -1,4 +1,4 @@
-import { Box, Tabs, Tab, Paper, Grid, Container, Stack } from "@mui/material";
+import { Box, Tabs, Tab, Paper, Grid, Stack } from "@mui/material";
 
 import { Amplify } from 'aws-amplify';
 import outputs from '../../../amplify_outputs.json';
