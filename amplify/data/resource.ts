@@ -63,7 +63,6 @@ const schema = a.schema({
   }).authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
 
   Foundling: a.model({
-    id: a.id().required(),
     loginId: a.string().required(),
     displayName: a.string(),
     firstName: a.string(),
@@ -76,7 +75,6 @@ const schema = a.schema({
     .authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
 
   FoundlingEvent: a.model({
-    id: a.id().required(),
     foundlingId: a.id().required(),
     eventId: a.integer().required(),
     seeking: a.string(),

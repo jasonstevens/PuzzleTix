@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Paper, Stack, Typography } from "@mui/material";
+import { Grid, Stack, Typography } from "@mui/material";
 
 import type { Schema } from "../../../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
@@ -8,7 +8,6 @@ import { Amplify } from 'aws-amplify';
 import outputs from '../../../amplify_outputs.json';
 import FoundlingResponsePopup from "./FoundlingResponsePopup";
 
-import PersonIcon from '@mui/icons-material/Person';
 import GroupIcon from '@mui/icons-material/Group';
 import GroupsIcon from '@mui/icons-material/Groups';
 
@@ -16,9 +15,6 @@ import GroupsIcon from '@mui/icons-material/Groups';
 Amplify.configure(outputs)
 
 const client = generateClient<Schema>();
-
-type FoundlingEvent = Schema['FoundlingEvent']['type'];
-
 interface Params {
   foundlingId: string;
   eventId: number;

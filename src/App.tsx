@@ -13,9 +13,12 @@ const WaitScreen = React.lazy(() => import('./component/screens/WaitScreen'));
 const VolunteerScreen = React.lazy(() => import('./component/screens/VolunteerScreen'));
 const SpectatorScreen = React.lazy(() => import('./component/screens/SpectatorScreen'));
 const FinderScreen = React.lazy(() => import('./component/screens/FinderScreen'));
+
 const VolunteerListScreen = React.lazy(() => import('./component/screens/VolunteerListScreen'));
 const SpectatorListScreen = React.lazy(() => import('./component/screens/SpectatorListScreen'));
 const FoundlingListScreen = React.lazy(() => import('./component/screens/FoundlingListScreen'));
+const FoundlingEventListScreen = React.lazy(() => import('./component/screens/FoundlingEventListScreen'));
+const FoundlingResponseListScreen = React.lazy(() => import('./component/screens/FoundlingResponseListScreen'));
 
 const theme = createTheme({
   palette: {
@@ -41,7 +44,10 @@ const App = () => {
 
             <Route path="consoleadmin/volunteer/:eventId" element={<VolunteerListScreen />} />
             <Route path="consoleadmin/spectator/:eventId" element={<SpectatorListScreen />} />
+
             <Route path="consoleadmin/foundling" element={<FoundlingListScreen />} />
+            <Route path="consoleadmin/foundlingevent" element={<FoundlingEventListScreen />} />
+            <Route path="consoleadmin/foundlingresponse" element={<FoundlingResponseListScreen />} />
 
             <Route path="/finder" element={<Auth />}>
               <Route element={<Nav />}>

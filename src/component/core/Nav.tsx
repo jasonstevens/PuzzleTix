@@ -1,4 +1,4 @@
-import { Box, Toolbar, CssBaseline, IconButton, Typography, Container, AppBar, Paper, Stack } from '@mui/material';
+import { Box, Toolbar, CssBaseline, IconButton, Typography, Container, AppBar, Paper } from '@mui/material';
 import { Outlet } from 'react-router';
 
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -85,7 +85,7 @@ export default function Nav() {
 
 
       {isAuth() ?
-        <Container sx={{ marginTop: 8 }}>
+        <Container sx={{ marginTop: '70px' }}>
           <Outlet />
         </Container>
         :

@@ -108,7 +108,12 @@ export default function VolunteerScreen() {
       console.log("Creating")
       formData!.loginId = user.signInDetails!.loginId!;
       console.log(formData)
-      const { data, errors } = await client.models.Foundling.create(formData!);
+      const { data, errors } = await client.models.Foundling.create({
+        loginId: user.signInDetails!.loginId!,
+        firstName: formData!.firstName,
+        lastName: formData!.lastName,
+        displayName: formData!.displayName,
+      });
 
       if (errors) {
         console.error("Error:", errors);
