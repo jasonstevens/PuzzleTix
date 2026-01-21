@@ -6,7 +6,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import type { PuzzleEvent } from '../data/PuzzleEvent';
 import { Checkbox, FormControlLabel } from '@mui/material';
 
 import type { Schema } from "../../../amplify/data/resource";
@@ -15,19 +14,21 @@ import { generateClient } from "aws-amplify/data";
 const client = generateClient<Schema>();
 
 interface Params {
-    puzzleEvent: PuzzleEvent;
+    currentFoundlingId: string;
     foundlingId: string;
+    foundlingEventId: string;
+    eventId: number;
 }
 
 interface Form {
-    eventId: number;
     comments: string;
     foundlingId: string;
-    pair: boolean;
-    team: boolean;
+    foundlingEventId: string;
+    responderId: string;
+    eventId: number;
 }
 
-export default function FoundlingEventPopup({ puzzleEvent, foundlingId }: Params) {
+export default function FoundlingEventPopup({ foundlingId, foundlingEventId, eventId, currentFoundlingId }: Params) {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -42,17 +43,15 @@ export default function FoundlingEventPopup({ puzzleEvent, foundlingId }: Params
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const formJson = Object.fromEntries((formData as any).entries());
-        const pair = formJson.pair == 'on' ? true : false;
-        const team = formJson.team == 'on' ? true : false;
-        var create = {
-            eventId: puzzleEvent!.id!,
-            comments: formJson.comments,
+        const email = formJson.email;
+        console.log(email);
+        handleCreate({
+            comments: 'Blerg',
+            eventId: eventId,
+            foundlingEventId: foundlingEventId,
             foundlingId: foundlingId,
-            pair: pair,
-            team: team,
-        };
-        console.log(create)
-        handleCreate(create);
+            responderId: foundlingId
+        });
         handleClose();
     };
 
@@ -60,7 +59,7 @@ export default function FoundlingEventPopup({ puzzleEvent, foundlingId }: Params
     const handleCreate = async (formData: Form) => {
         console.log("Creating")
         console.log(formData)
-        const { data, errors } = await client.models.FoundlingEvent.create(formData);
+        const { data, errors } = await client.models.FoundlingResponse.create(formData);
 
         if (errors) {
             console.error("Error:", errors);
@@ -76,9 +75,9 @@ export default function FoundlingEventPopup({ puzzleEvent, foundlingId }: Params
 
     return (
         <React.Fragment>
-            <Button variant="contained" onClick={handleClickOpen}>Register</Button>
+            <Button variant="contained" onClick={handleClickOpen} disabled={foundlingId == currentFoundlingId}>Message</Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>{puzzleEvent.name}</DialogTitle>
+                <DialogTitle></DialogTitle>
                 <DialogContent>
                     <DialogContentText>
 
@@ -101,7 +100,7 @@ export default function FoundlingEventPopup({ puzzleEvent, foundlingId }: Params
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit" form="subscription-form">Register</Button>
+
                 </DialogActions>
             </Dialog>
         </React.Fragment>

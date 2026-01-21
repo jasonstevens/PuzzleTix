@@ -11,6 +11,7 @@ import outputs from '../../../amplify_outputs.json';
 import { getEvents } from "../data/PuzzleEvent";
 import React from "react";
 import FoundlingEventPopup from "./FoundlingEventRegisterPopup";
+import FinderEventList from "./FinderEventList";
 
 Amplify.configure(outputs)
 
@@ -56,9 +57,9 @@ export default function FinderEvents({ foundlingId }: Params) {
 
   const fetchData = async () => {
     console.log('Load')
-    const { data: foundlingEvents, errors: eventErrors } = await client.models.FoundlingEvent.listFoundlingEvents({ foundlingId: user!.signInDetails!.loginId! })
+    const { data: foundlingEvents, errors: eventErrors } = await client.models.FoundlingEvent.listFoundlingEventsByFoundling({ foundlingId: user!.signInDetails!.loginId! })
 
-    const { data: foundlingResponses, errors: responseErrors } = await client.models.FoundlingResponse.listFoundlingResponses({ foundlingId: user!.signInDetails!.loginId! })
+    const { data: foundlingResponses, errors: responseErrors } = await client.models.FoundlingResponse.listFoundlingResponsesByFoundling({ foundlingId: user!.signInDetails!.loginId! })
 
     setFoundlingEvents(foundlingEvents);
     setFoundlingResponses(foundlingResponses);
@@ -92,7 +93,7 @@ export default function FinderEvents({ foundlingId }: Params) {
             <Paper sx={{ padding: 1, backgroundColor: "#00000022", borderRadius: '10px' }}>
               <Box component="img" src={thisEvent.logo} sx={{ width: "150px", paddingTop: "2px" }} />
               <Box sx={{ textAlign: "center" }} alignItems='center'>
-                <FoundlingEventPopup puzzleEvent={thisEvent} foundlingId={'bruce'} />
+                <FoundlingEventPopup puzzleEvent={thisEvent} foundlingId={foundlingId} />
               </Box>
             </Paper>
           </>
@@ -104,12 +105,12 @@ export default function FinderEvents({ foundlingId }: Params) {
         <Tab label="Other Puzzlers" />
       </Tabs>
       <CustomTabPanel value={value} index={0}>
-        {foundlingEvents?.map((thisEvent) =>
+        {foundlingResponses?.map((thisEvent) =>
           <>
             <Paper sx={{ padding: 1, backgroundColor: "#00000022", borderRadius: '10px' }}>
               {/* <Box component="img" src={thisEvent.logo} sx={{ width: "150px", paddingTop: "2px" }} /> */}
               <Box sx={{ textAlign: "center" }} alignItems='center'>
-                <Button sx={{ m: 1 }} variant="contained" >Reply</Button>
+                <Button sx={{ m: 1 }} variant="contained">Reply</Button>
 
               </Box>
             </Paper>
@@ -118,16 +119,18 @@ export default function FinderEvents({ foundlingId }: Params) {
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={1}>
-        {foundlingResponses?.map((thisEvent) =>
+        {puzzleEvents.map((thisEvent) =>
           <>
             <Paper sx={{ padding: 1, backgroundColor: "#00000022", borderRadius: '10px' }}>
-              {/* <Box component="img" src={thisEvent.logo} sx={{ width: "150px", paddingTop: "2px" }} /> */}
+              <Box component="img" src={thisEvent.logo} sx={{ width: "150px", paddingTop: "2px" }} />
               <Box sx={{ textAlign: "center" }} alignItems='center'>
-                <Button sx={{ m: 1 }} variant="contained" >Message</Button>
+                <FinderEventList foundlingId={foundlingId} eventId={thisEvent.id} />
               </Box>
             </Paper>
           </>
         )}
+
+
       </CustomTabPanel>
     </>
   );
