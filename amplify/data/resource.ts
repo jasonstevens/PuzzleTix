@@ -69,7 +69,8 @@ const schema = a.schema({
     lastName: a.string(),
     performance: a.string(),
     goal: a.string(),
-    foundlingEvents: a.hasMany('FoundlingEvent', 'foundlingId')
+    foundlingEvents: a.hasMany('FoundlingEvent', 'foundlingId'),
+    foundlingResponses: a.hasMany('FoundlingResponse', 'responderId')
   })
     .secondaryIndexes((index) => [index("loginId")])
     .authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
@@ -94,7 +95,8 @@ const schema = a.schema({
     foundlingEventId: a.id().required(),
     eventId: a.integer().required(),
     responderId: a.id().required(),
-    comments: a.string()
+    comments: a.string(),
+    foundling: a.belongsTo('Foundling', 'responderId')
   })
     .secondaryIndexes((index) => [
       index("eventId").queryField("listFoundlingResponsesByEvent"),

@@ -27,6 +27,10 @@ export function getEvent(shortName: string): PuzzleEvent {
   return data.filter(event => event.shortName == shortName)[0];
 }
 
+export function getEventById(id: number): PuzzleEvent {
+  return data.filter(event => event.id == id)[0];
+}
+
 const data: PuzzleEvent[] =
   [
     {
