@@ -147,20 +147,20 @@ export default function VolunteerScreen() {
             <FormGroup>
               <Stack direction="row" spacing={1}>
                 <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
-                <TextField name="displayName" label="Display Name" required size='small' value={formData.displayName} onChange={handleChange} />
+                <TextField name="displayName" label="Name to Display" required size='small' value={formData.displayName} onChange={handleChange} />
               </Stack>
             </FormGroup>
 
-            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+            {/* <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
               <CommentIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
               <TextField name="goal" label="Additional Comments" size='small' value={formData.goal} multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
-            </Box>
+            </Box> */}
             <Box sx={{ textAlign: "center" }} alignItems='center'>
               <Button sx={{ m: 1 }} onClick={submit} variant="contained" disabled={formFilled()}>Save</Button>
             </Box>
 
             <Divider />
-
+            <Typography variant="h5">Available Events</Typography>
             <FinderEvents foundlingId={formData.id} />
 
           </Stack>

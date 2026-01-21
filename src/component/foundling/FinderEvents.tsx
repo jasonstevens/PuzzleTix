@@ -1,4 +1,4 @@
-import { Box, Button, Tabs, Tab, Paper, Grid, Container, Stack } from "@mui/material";
+import { Box, Tabs, Tab, Paper, Grid, Container, Stack } from "@mui/material";
 
 import type { Schema } from "../../../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
@@ -12,15 +12,13 @@ import { getEvents } from "../data/PuzzleEvent";
 import React from "react";
 import FoundlingEventPopup from "./FoundlingEventRegisterPopup";
 import FinderEventList from "./FinderEventList";
+import FinderMessageList from "./FinderMessageList";
 
 Amplify.configure(outputs)
 
 const client = generateClient<Schema>();
 
-
 type FoundlingEvent = Schema['FoundlingEvent']['type'];
-type FoundlingResponse = Schema['FoundlingResponse']['type'];
-
 interface Params {
   foundlingId: string;
 }
@@ -53,30 +51,17 @@ export default function FinderEvents({ foundlingId }: Params) {
   const puzzleEvents = getEvents().filter(f => (f.finder));
 
   const [foundlingEvents, setFoundlingEvents] = useState<FoundlingEvent[]>();
-  const [foundlingResponses, setFoundlingResponses] = useState<FoundlingResponse[]>();
 
   const fetchData = async () => {
     console.log('Load')
     const { data: foundlingEvents, errors: eventErrors } = await client.models.FoundlingEvent.listFoundlingEventsByFoundling({ foundlingId: user!.signInDetails!.loginId! })
 
-    const { data: foundlingResponses, errors: responseErrors } = await client.models.FoundlingResponse.listFoundlingResponsesByFoundling({ foundlingId: user!.signInDetails!.loginId! })
-
     setFoundlingEvents(foundlingEvents);
-    setFoundlingResponses(foundlingResponses);
 
     if (eventErrors) {
       console.error("Error:", eventErrors);
       console.log(foundlingEvents);
       for (const error of eventErrors) {
-        console.error(error.message);
-      }
-      return;
-    }
-
-    if (responseErrors) {
-      console.error("Error:", responseErrors);
-      console.log(foundlingResponses);
-      for (const error of responseErrors) {
         console.error(error.message);
       }
       return;
@@ -105,17 +90,7 @@ export default function FinderEvents({ foundlingId }: Params) {
         <Tab label="Other Puzzlers" />
       </Tabs>
       <CustomTabPanel value={value} index={0}>
-        {foundlingResponses?.map((thisEvent) =>
-          <>
-            <Paper sx={{ padding: 1, backgroundColor: "#00000022", borderRadius: '10px' }}>
-              {/* <Box component="img" src={thisEvent.logo} sx={{ width: "150px", paddingTop: "2px" }} /> */}
-              <Box sx={{ textAlign: "center" }} alignItems='center'>
-                <Button sx={{ m: 1 }} variant="contained">Reply</Button>
-
-              </Box>
-            </Paper>
-          </>
-        )}
+        <FinderMessageList foundlingId={foundlingId} />
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={1}>
