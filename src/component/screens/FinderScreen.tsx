@@ -126,7 +126,7 @@ export default function VolunteerScreen() {
       <Box component="img" src={logo} sx={{ width: '300px', maxWidth: "300px" }} />
 
       {loaded ?
-        <Paper sx={{ padding: 1, paddingTop: 0, backgroundColor: "#ffffffbb", borderRadius: '15px' }}>
+        <Paper sx={{ padding: 1, paddingTop: 0, backgroundColor: "#ffffff88", borderRadius: '15px' }}>
 
           <Stack direction="column" spacing={2}>
             <Stack direction="column" spacing={1} textAlign={"left"}>
