@@ -72,18 +72,20 @@ export default function FinderEvents({ foundlingId }: Params) {
 
   return (
     <>
-      <Grid container spacing={1}>
-        {puzzleEvents.map((thisEvent) =>
-          <>
-            <Paper sx={{ padding: 1, backgroundColor: "#00000022", borderRadius: '10px' }}>
-              <Box component="img" src={thisEvent.logo} sx={{ width: "150px", paddingTop: "2px" }} />
-              <Box sx={{ textAlign: "center" }} alignItems='center'>
+      {puzzleEvents.map((thisEvent) =>
+        <>
+          <Paper sx={{ padding: 1, backgroundColor: "#00000022", borderRadius: '10px', width: '100%' }}>
+            <Grid container alignItems="center">
+              <Grid size={8}>
+                <Box component="img" src={thisEvent.logo} sx={{ width: "200px" }} />
+              </Grid>
+              <Grid size={4}>
                 <FoundlingEventPopup puzzleEvent={thisEvent} foundlingId={foundlingId} />
-              </Box>
-            </Paper>
-          </>
-        )}
-      </Grid>
+              </Grid>
+            </Grid>
+          </Paper>
+        </>
+      )}
 
       <Tabs onChange={handleTabChange} value={value}>
         <Tab label="Messages for Me" />

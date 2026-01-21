@@ -1,7 +1,6 @@
 import { Box, Button, FormGroup, Stack, TextField, Typography, Divider, Paper } from "@mui/material";
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import CommentIcon from '@mui/icons-material/Comment';
 
 import logo from '../../assets/puzzletix-white.svg'
 
@@ -78,14 +77,6 @@ export default function VolunteerScreen() {
     setFormData((prevFormData) => ({
       ...prevFormData!,
       [name]: value,
-    }));
-  };
-
-  const handleChecked = (event: { target: { name: any; checked: any }; }) => {
-    const { name, checked } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData!,
-      [name]: checked,
     }));
   };
 
