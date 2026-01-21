@@ -1,4 +1,4 @@
-import { Box, Button, Tabs, Tab, Paper, Grid } from "@mui/material";
+import { Box, Button, Tabs, Tab, Paper, Grid, Container, Stack } from "@mui/material";
 
 import type { Schema } from "../../../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
@@ -119,17 +119,20 @@ export default function FinderEvents({ foundlingId }: Params) {
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={1}>
-        {puzzleEvents.map((thisEvent) =>
-          <>
-            <Paper sx={{ padding: 1, backgroundColor: "#00000022", borderRadius: '10px' }}>
-              <Box component="img" src={thisEvent.logo} sx={{ width: "150px", paddingTop: "2px" }} />
-              <Box sx={{ textAlign: "center" }} alignItems='center'>
-                <FinderEventList foundlingId={foundlingId} eventId={thisEvent.id} />
-              </Box>
-            </Paper>
-          </>
-        )}
-
+        <Stack direction="column" spacing={1}>
+          {puzzleEvents.map((thisEvent) =>
+            <>
+              <Paper sx={{ padding: 1, backgroundColor: "#00000022", borderRadius: '10px' }}>
+                <Container>
+                  <Box component="img" src={thisEvent.logo} sx={{ width: "150px", paddingTop: "2px" }} />
+                </Container>
+                <Box sx={{ textAlign: "center" }} alignItems='center'>
+                  <FinderEventList foundlingId={foundlingId} eventId={thisEvent.id} />
+                </Box>
+              </Paper>
+            </>
+          )}
+        </Stack>
 
       </CustomTabPanel>
     </>
