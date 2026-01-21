@@ -43,15 +43,15 @@ export default function FoundlingEventPopup({ foundlingId, foundlingEventId, eve
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const formJson = Object.fromEntries((formData as any).entries());
-        const email = formJson.email;
-        console.log(email);
-        handleCreate({
-            comments: 'Blerg',
+        const val = {
+            comments: formJson.comments,
             eventId: eventId,
             foundlingEventId: foundlingEventId,
             foundlingId: foundlingId,
-            responderId: foundlingId
-        });
+            responderId: currentFoundlingId
+        };
+        console.log(val);
+        handleCreate(val);
         handleClose();
     };
 
@@ -77,29 +77,31 @@ export default function FoundlingEventPopup({ foundlingId, foundlingEventId, eve
         <React.Fragment>
             <Button variant="contained" onClick={handleClickOpen} disabled={foundlingId == currentFoundlingId}>Message</Button>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle></DialogTitle>
+                <DialogTitle>Express Interest</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-
+                        Provide some information on how best to contact you to discuss grouping together!
                     </DialogContentText>
                     <form onSubmit={handleSubmit} id="subscription-form">
-                        <FormControlLabel control={<Checkbox name="pair" />} label="Seeking a Pair" sx={{ height: '30px' }} />
-                        <FormControlLabel control={<Checkbox name="team" />} label="Seeking a Team" sx={{ height: '30px' }} />
 
                         <TextField
                             autoFocus
+                            multiline
+                            sx={{ width: '75vw' }}
+                            rows="3"
                             margin="dense"
                             id="name"
                             name="comments"
-                            label="Comments"
+                            label=""
                             type="comments"
                             fullWidth
-                            variant="standard"
+                            variant="outlined"
                         />
                     </form>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
+                    <Button type="submit" form="subscription-form">Send</Button>
 
                 </DialogActions>
             </Dialog>
