@@ -1,4 +1,4 @@
-import { Box, Button, FormGroup, Stack, TextField, Typography, Divider, Paper } from "@mui/material";
+import { Box, Button, FormGroup, Stack, TextField, Typography, Divider, Paper, CircularProgress } from "@mui/material";
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
@@ -21,6 +21,8 @@ const client = generateClient<Schema>();
 export default function VolunteerScreen() {
 
   const { user } = useAuthenticator((context) => [context.user]);
+
+  const [loaded, setLoaded] = useState(false);
 
   const [formData, setFormData] = useState({
     id: '',
@@ -61,6 +63,8 @@ export default function VolunteerScreen() {
 
       }));
     }
+
+    setLoaded(true);
 
   };
 
@@ -119,44 +123,58 @@ export default function VolunteerScreen() {
 
   return (
     <>
-      <Box component="img" src={logo} sx={{ maxWidth: "300px" }} />
-      <Paper sx={{ padding: 1, paddingTop: 0, backgroundColor: "#ffffffbb", borderRadius: '15px' }}>
+      <Box component="img" src={logo} sx={{ width: '300px', maxWidth: "300px" }} />
 
-        <Stack direction="column" spacing={2}>
-          <Stack direction="column" spacing={1} textAlign={"left"}>
-            <Divider />
-            <Typography variant="h5">Finder Profile</Typography>
+      {loaded ?
+        <Paper sx={{ padding: 1, paddingTop: 0, backgroundColor: "#ffffffbb", borderRadius: '15px' }}>
 
-            <FormGroup>
-              <Stack direction="row" spacing={1}>
-                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
-                <TextField name="firstName" label="First Name" required size='small' value={formData.firstName} onChange={handleChange} />
-                <TextField name="lastName" label="Last Name(s)" size='small' value={formData.lastName} onChange={handleChange} />
-              </Stack>
-            </FormGroup>
+          <Stack direction="column" spacing={2}>
+            <Stack direction="column" spacing={1} textAlign={"left"}>
+              <Divider />
+              <Typography variant="h5">Finder Profile</Typography>
 
-            <FormGroup>
-              <Stack direction="row" spacing={1}>
-                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
-                <TextField name="displayName" label="Name to Display" required size='small' value={formData.displayName} onChange={handleChange} />
-              </Stack>
-            </FormGroup>
 
-            {/* <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+              <FormGroup>
+                <Stack direction="row" spacing={1}>
+                  <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
+                  <TextField name="firstName" label="First Name" required size='small' value={formData.firstName} onChange={handleChange} />
+                  <TextField name="lastName" label="Last Name(s)" size='small' value={formData.lastName} onChange={handleChange} />
+                </Stack>
+              </FormGroup>
+
+              <FormGroup>
+                <Stack direction="row" spacing={1}>
+                  <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
+                  <TextField name="displayName" label="Name to Display" required size='small' value={formData.displayName} onChange={handleChange} />
+                </Stack>
+              </FormGroup>
+
+              {/* <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
               <CommentIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
               <TextField name="goal" label="Additional Comments" size='small' value={formData.goal} multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
             </Box> */}
-            <Box sx={{ textAlign: "center" }} alignItems='center'>
-              <Button sx={{ m: 1 }} onClick={submit} variant="contained" disabled={formFilled()}>Save</Button>
-            </Box>
+              <Box sx={{ textAlign: "center" }} alignItems='center'>
+                <Button sx={{ m: 1 }} onClick={submit} variant="contained" disabled={formFilled()}>Save</Button>
+              </Box>
 
-            <Divider />
-            <Typography variant="h5">Available Events</Typography>
-            <FinderEvents foundlingId={formData.id} />
+              {formData.id != '' &&
+                <>
+                  <Divider />
+                  <Typography variant="h5">Available Events</Typography>
+                  <FinderEvents foundlingId={formData.id} />
+                </>
+              }
 
+            </Stack>
           </Stack>
-        </Stack>
-      </Paper>
+        </Paper>
+
+        :
+        <>
+          <CircularProgress size='50vw' sx={{ marginTop: '100px' }} />
+        </>
+      }
+
 
     </>
   );

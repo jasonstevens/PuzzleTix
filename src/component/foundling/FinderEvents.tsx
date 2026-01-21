@@ -1,11 +1,5 @@
 import { Box, Tabs, Tab, Paper, Grid, Container, Stack } from "@mui/material";
 
-import type { Schema } from "../../../amplify/data/resource";
-import { generateClient } from "aws-amplify/data";
-import { useEffect, useState } from "react";
-
-import { useAuthenticator } from '@aws-amplify/ui-react';
-
 import { Amplify } from 'aws-amplify';
 import outputs from '../../../amplify_outputs.json';
 import { getEvents } from "../data/PuzzleEvent";
@@ -16,9 +10,13 @@ import FinderMessageList from "./FinderMessageList";
 
 Amplify.configure(outputs)
 
-const client = generateClient<Schema>();
 
-type FoundlingEvent = Schema['FoundlingEvent']['type'];
+// import { useAuthenticator } from '@aws-amplify/ui-react';
+// import type { Schema } from "../../../amplify/data/resource";
+// import { generateClient } from "aws-amplify/data";
+// import { useEffect, useState } from "react";
+// const client = generateClient<Schema>();
+// type FoundlingEvent = Schema['FoundlingEvent']['type'];
 interface Params {
   foundlingId: string;
 }
@@ -40,8 +38,6 @@ function CustomTabPanel(props: TabPanelProps) {
 
 export default function FinderEvents({ foundlingId }: Params) {
 
-  const { user } = useAuthenticator((context) => [context.user]);
-
   const [value, setValue] = React.useState(0);
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
@@ -50,25 +46,27 @@ export default function FinderEvents({ foundlingId }: Params) {
 
   const puzzleEvents = getEvents().filter(f => (f.finder));
 
-  const [foundlingEvents, setFoundlingEvents] = useState<FoundlingEvent[]>();
 
-  const fetchData = async () => {
-    console.log('Load')
-    const { data: foundlingEvents, errors: eventErrors } = await client.models.FoundlingEvent.listFoundlingEventsByFoundling({ foundlingId: user!.signInDetails!.loginId! })
+  // const { user } = useAuthenticator((context) => [context.user]);
+  // const [foundlingEvents, setFoundlingEvents] = useState<FoundlingEvent[]>();
 
-    setFoundlingEvents(foundlingEvents);
+  // const fetchData = async () => {
+  //   console.log('Load')
+  //   const { data: foundlingEvents, errors: eventErrors } = await client.models.FoundlingEvent.listFoundlingEventsByFoundling({ foundlingId: user!.signInDetails!.loginId! })
 
-    if (eventErrors) {
-      console.error("Error:", eventErrors);
-      console.log(foundlingEvents);
-      for (const error of eventErrors) {
-        console.error(error.message);
-      }
-      return;
-    }
-  };
+  //   setFoundlingEvents(foundlingEvents);
 
-  useEffect(() => { fetchData(); }, []);
+  //   if (eventErrors) {
+  //     console.error("Error:", eventErrors);
+  //     console.log(foundlingEvents);
+  //     for (const error of eventErrors) {
+  //       console.error(error.message);
+  //     }
+  //     return;
+  //   }
+  // };
+
+  // useEffect(() => { fetchData(); }, []);
 
   return (
     <>
