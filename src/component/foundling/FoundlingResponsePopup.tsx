@@ -79,7 +79,7 @@ export default function FoundlingEventPopup({ foundlingId, foundlingEventId, eve
                 <DialogTitle>Express Interest</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Provide some information on how best to contact you to discuss grouping together!
+                        Provide some information on what you want out of the event, and how to best contact you to discuss grouping together!
                     </DialogContentText>
                     <form onSubmit={handleSubmit} id="subscription-form">
 
