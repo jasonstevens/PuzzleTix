@@ -1,4 +1,4 @@
-import { Box, Toolbar, CssBaseline, IconButton, Typography, Container, Paper, AppBar } from '@mui/material';
+import { Box, Toolbar, CssBaseline, IconButton, Typography, Container, AppBar, Paper, Stack } from '@mui/material';
 import { Outlet } from 'react-router';
 
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -8,6 +8,8 @@ import { ThemeProvider, type Theme } from '@aws-amplify/ui-react';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
+
+import logo from '../../assets/puzzletix-white.svg'
 
 export default function Nav() {
 
@@ -23,23 +25,23 @@ export default function Nav() {
         },
         button: {
           primary: {
-            backgroundColor: '#14dbab',
+            backgroundColor: 'rgba(255, 102, 196, 1)',
             borderWidth: '0',
           },
           link: {
-            color: '#9266ff',
+            color: 'rgba(255, 102, 196, 1)',
           },
         },
         fieldcontrol: {
           _focus: {
-            boxShadow: `0 0 0 2px #9266ff`,
+            boxShadow: `0 0 0 3px rgba(255, 102, 196, 1)`,
           },
         },
         tabs: {
           item: {
-            color: '#9266ff',
+            color: 'rgba(255, 102, 196, 1)',
             _active: {
-              borderColor: '#9266ff',
+              borderColor: 'rgba(0, 0, 0, 1)',
               color: 'black',
             },
           },
@@ -66,34 +68,36 @@ export default function Nav() {
     }}>
 
       <CssBaseline />
-      <AppBar position="fixed" sx={{ background: 'linear-gradient(to right, #14dbab, #9266ff)' }}>
-        <Toolbar disableGutters sx={{ paddingRight: '4px', paddingLeft: '20px' }}>
-          {isAuth() &&
-            <Box sx={{ display: { xs: 'none', sm: 'block', md: 'block', } }}>
+      <AppBar position="fixed" sx={{ background: 'linear-gradient(110deg, rgba(255, 222, 89, 1), rgba(255, 102, 196, 1))' }}>
+        {isAuth() &&
+          <>
+            <Toolbar disableGutters>
+              <Box sx={{ height: "50px", width: "auto", flexGrow: 1 }} />
+              <Typography sx={{ paddingRight: '10px' }} variant="h6">{user?.signInDetails?.loginId}</Typography>
               <IconButton color="inherit" onClick={signOut} edge="start">
                 <LogoutIcon />
               </IconButton>
-            </Box>
-          }
-
-          <Box sx={{ height: "50px", width: "auto", flexGrow: 1 }} />
-          {isAuth() && <Typography sx={{ paddingRight: '20px' }} variant="h6">{user?.signInDetails?.loginId}</Typography>}
-          {/* <Box component="img" src={Logo} sx={{ marginLeft: '30px', height: "50px", width: "auto" }} /> */}
-        </Toolbar>
+            </Toolbar>
+          </>
+        }
       </AppBar>
 
 
 
       {isAuth() ?
-        <Container sx={{ marginTop: 10 }}>
+        <Container sx={{ marginTop: 8 }}>
           <Outlet />
         </Container>
         :
-        <ThemeProvider theme={sTheme}>
-
-          <Authenticator>
-          </Authenticator>
-        </ThemeProvider>
+        <Container sx={{ marginTop: 10 }}>
+          <Box component="img" src={logo} sx={{ maxWidth: "300px" }} />
+          <ThemeProvider theme={sTheme}>
+            <Paper elevation={10} sx={{ margin: '10px' }}>
+              <Authenticator>
+              </Authenticator>
+            </Paper>
+          </ThemeProvider>
+        </Container>
       }
 
     </Box>
