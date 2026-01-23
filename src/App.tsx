@@ -12,7 +12,7 @@ const RegisterScreen = React.lazy(() => import('./component/screens/RegisterScre
 const WaitScreen = React.lazy(() => import('./component/screens/WaitScreen'));
 const VolunteerScreen = React.lazy(() => import('./component/screens/VolunteerScreen'));
 const SpectatorScreen = React.lazy(() => import('./component/screens/SpectatorScreen'));
-const FinderScreen = React.lazy(() => import('./component/screens/FinderScreen'));
+const FoundlingScreen = React.lazy(() => import('./component/screens/FoundlingScreen'));
 
 const VolunteerListScreen = React.lazy(() => import('./component/screens/VolunteerListScreen'));
 const SpectatorListScreen = React.lazy(() => import('./component/screens/SpectatorListScreen'));
@@ -51,7 +51,7 @@ const App = () => {
 
             <Route path="/finder" element={<Auth />}>
               <Route element={<Nav />}>
-                <Route path="" element={<FinderScreen />} />
+                <Route path="" element={<FoundlingScreen />} />
               </Route>
             </Route>
 

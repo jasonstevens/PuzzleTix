@@ -12,7 +12,7 @@ import { useAuthenticator } from '@aws-amplify/ui-react';
 
 import { Amplify } from 'aws-amplify';
 import outputs from '../../../amplify_outputs.json';
-import FinderEvents from "../foundling/FinderEvents";
+import FoundlingPanel from "../foundling/FoundlingPanel";
 
 Amplify.configure(outputs)
 
@@ -155,7 +155,7 @@ export default function VolunteerScreen() {
             </FormGroup>
 
             {profile ?
-              <FinderEvents foundlingId={formData.id} />
+              <FoundlingPanel foundlingId={formData.id} />
               :
               <Typography>Enter and Save your details to find events!</Typography>
             }

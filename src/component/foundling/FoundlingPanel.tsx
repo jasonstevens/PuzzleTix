@@ -25,7 +25,7 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-export default function FinderEvents({ foundlingId }: Params) {
+export default function FoundlingPanel({ foundlingId }: Params) {
 
   const [value, setValue] = React.useState(0);
 
