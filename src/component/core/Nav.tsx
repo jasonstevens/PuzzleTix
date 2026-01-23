@@ -85,7 +85,7 @@ export default function Nav() {
 
 
       {isAuth() ?
-        <Container sx={{ marginTop: '70px' }}>
+        <Container sx={{ marginTop: '70px', width: { lg: '60vw', md: '60vw' } }}>
           <Outlet />
         </Container>
         :

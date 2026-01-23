@@ -61,8 +61,7 @@ export default function FinderResponseList({ foundlingId }: Params) {
   return (
     <>
       {foundlingEvents ?
-        <Grid container sx={{ border: 0 }} spacing={1}>
-
+        <>
           {foundlingEvents?.map((thisEvent) =>
             <>
               <Grid container size={12} sx={{ border: 0 }}>
@@ -82,7 +81,7 @@ export default function FinderResponseList({ foundlingId }: Params) {
 
             </>
           )}
-        </Grid >
+        </>
         :
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <CircularProgress />

@@ -1,4 +1,4 @@
-import { Box, FormGroup, Stack, TextField, Typography, Paper, CircularProgress, IconButton, Grid } from "@mui/material";
+import { Box, FormGroup, Stack, TextField, Typography, Paper, CircularProgress, IconButton, Grid, Container } from "@mui/material";
 
 import SaveIcon from '@mui/icons-material/Save';
 
@@ -131,40 +131,44 @@ export default function VolunteerScreen() {
       <Box component="img" src={logo} sx={{ width: '300px', maxWidth: "300px" }} />
 
       {loaded ?
-        <Paper sx={{ padding: 1, backgroundColor: "#ffffff88", borderRadius: '15px' }}>
+        <Box sx={{ width: '100%' }}>
+          <Paper sx={{ padding: 1, backgroundColor: "#ffffff88", borderRadius: '15px' }} >
 
-          <Stack direction="column" spacing={1} textAlign={"left"}>
 
-            <Grid container>
-              <Grid size={10.5}><Typography variant="h5">Your Details</Typography></Grid>
-              <Grid size={1.5}>
-                <Box sx={{ textAlign: "center" }} alignItems='center'>
-                  <IconButton onClick={submit} disabled={formFilled()} sx={{ color: '#e33e7f', padding: '3px', marginTop: '2px', border: 2 }} size='large'><SaveIcon /></IconButton>
-                </Box>
+            <Stack direction="column" spacing={1} textAlign={"left"}>
+
+              <Grid container>
+                <Grid size={10.5}><Typography variant="h5">Your Details</Typography></Grid>
+                <Grid size={1.5}>
+                  <Box sx={{ textAlign: "center" }} alignItems='center'>
+                    <IconButton onClick={submit} disabled={formFilled()} sx={{ color: '#e33e7f', padding: '3px', marginTop: '2px', border: 2 }} size='large'><SaveIcon /></IconButton>
+                  </Box>
+                </Grid>
               </Grid>
-            </Grid>
 
-            <FormGroup>
-              <Stack direction="column" spacing={1.5}>
-                <Stack direction="row" spacing={1}>
-                  <TextField name="firstName" label="First Name" required size='small' value={formData.firstName} onChange={handleChange} />
-                  <TextField name="lastName" label="Last Name(s)" size='small' value={formData.lastName} onChange={handleChange} />
+              <FormGroup>
+                <Stack direction="column" spacing={1.5}>
+                  <Stack direction="row" spacing={1}>
+                    <TextField name="firstName" label="First Name" required size='small' value={formData.firstName} onChange={handleChange} />
+                    <TextField name="lastName" label="Last Name(s)" size='small' value={formData.lastName} onChange={handleChange} />
+                  </Stack>
+                  <TextField name="displayName" label="Name to Show Other Puzzlers" required size='small' value={formData.displayName} onChange={handleChange} sx={{ maxWidth: '400px' }} />
                 </Stack>
-                <TextField name="displayName" label="Name to Show Other Puzzlers" required size='small' value={formData.displayName} onChange={handleChange} />
-              </Stack>
-            </FormGroup>
+              </FormGroup>
 
-            {profile ?
-              <FoundlingPanel foundlingId={formData.id} />
-              :
-              <Typography>Enter and Save your details to find events!</Typography>
-            }
-          </Stack>
-        </Paper>
+              {profile ?
+                <FoundlingPanel foundlingId={formData.id} />
+                :
+                <Typography>Enter and save your details to find other puzzlers!</Typography>
+              }
+            </Stack>
+          </Paper>
+        </Box>
         :
-        <CircularProgress size='100px' sx={{ marginTop: '100px' }} />
+        <div>
+          <CircularProgress size='100px' sx={{ marginTop: '100px' }} />
+        </div>
       }
-
     </>
   );
 };
