@@ -6,9 +6,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import EmailIcon from '@mui/icons-material/Email';
+
 
 import type { Schema } from "../../../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
+import IconButton from '@mui/material/IconButton';
 
 const client = generateClient<Schema>();
 
@@ -74,9 +77,11 @@ export default function FoundlingEventPopup({ foundlingId, foundlingEventId, eve
 
     return (
         <React.Fragment>
-            <Button variant="contained" onClick={handleClickOpen} disabled={foundlingId == currentFoundlingId}>Message</Button>
+            <IconButton onClick={handleClickOpen} disabled={foundlingId == currentFoundlingId} sx={{ color: '#e33e7f', padding: '3px', marginTop: '2px', border: 2 }} size='large'>
+                <EmailIcon />
+            </IconButton>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Express Interest</DialogTitle>
+                <DialogTitle>Send a Message</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         Provide some information on what you want out of the event, and how to best contact you to discuss grouping together!
@@ -86,8 +91,7 @@ export default function FoundlingEventPopup({ foundlingId, foundlingEventId, eve
                         <TextField
                             autoFocus
                             multiline
-                            sx={{ width: '75vw' }}
-                            rows="3"
+                            rows="4"
                             margin="dense"
                             id="name"
                             name="comments"

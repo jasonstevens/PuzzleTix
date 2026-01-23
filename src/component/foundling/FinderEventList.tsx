@@ -1,4 +1,4 @@
-import { Grid, Stack, Typography } from "@mui/material";
+import { Divider, Grid, Stack, Typography } from "@mui/material";
 
 import type { Schema } from "../../../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
@@ -52,11 +52,7 @@ export default function FinderEventList({ foundlingId, eventId }: Params) {
       return z;
     });
 
-
-
     setFoundlingEvents(f);
-
-
 
     if (eventErrors) {
       console.error("Error:", eventErrors);
@@ -76,34 +72,39 @@ export default function FinderEventList({ foundlingId, eventId }: Params) {
 
         {foundlingEvents?.map((thisEvent) =>
           <>
-            <Grid size={8}>
-              <Grid container size={12} sx={{ border: 0 }}>
-                <Grid size={9} textAlign={"left"}>
-                  <Stack direction="column" spacing={1}>
-                    <Typography sx={{ fontWeight: 800 }}>{thisEvent.displayName}</Typography>
-                  </Stack>
-                </Grid>
-                <Grid size={3} sx={{ border: 0 }}>
-                  <Stack direction="row" spacing={1}>
-                    {thisEvent.pair &&
-                      <GroupIcon />
-                    }
-                    {thisEvent.team &&
-                      <GroupsIcon />
-                    }
-                  </Stack>
+            <Grid container size={12} sx={{ border: 0 }}>
+              <Grid size={12}>
+                <Divider />
+              </Grid>
 
-                </Grid>
+              <Grid size={7} textAlign={"left"}>
+                <Stack direction="column" spacing={1}>
+                  <Typography sx={{ fontWeight: 800, fontSize: 20 }}>{thisEvent.displayName}</Typography>
+                </Stack>
+              </Grid>
+              <Grid size={1.5} sx={{ border: 0 }}>
 
-                <Grid size={12} textAlign={"left"} sx={{ border: 0 }}>
-                  <Typography>{thisEvent.comments}</Typography>
-                </Grid>
+                {thisEvent.pair &&
+                  <GroupIcon sx={{ fontSize: 30 }} />
+                }
+              </Grid>
+              <Grid size={1.5} sx={{ border: 0 }}>
+
+                {thisEvent.team &&
+                  <GroupsIcon sx={{ fontSize: 30 }} />
+                }
+
+              </Grid>
+              <Grid size={2}>
+                <FoundlingResponsePopup eventId={eventId} foundlingId={thisEvent.foundlingId} foundlingEventId={thisEvent.id} currentFoundlingId={foundlingId} />
+              </Grid>
+
+              <Grid size={12} textAlign={"left"} sx={{ border: 0 }}>
+                <Typography>{thisEvent.comments}</Typography>
               </Grid>
             </Grid>
 
-            <Grid size={4}>
-              <FoundlingResponsePopup eventId={eventId} foundlingId={thisEvent.foundlingId} foundlingEventId={thisEvent.id} currentFoundlingId={foundlingId} />
-            </Grid>
+
 
           </>
         )}

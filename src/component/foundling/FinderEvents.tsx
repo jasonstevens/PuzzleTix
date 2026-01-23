@@ -72,7 +72,7 @@ export default function FinderEvents({ foundlingId }: Params) {
     <>
       {puzzleEvents.map((thisEvent) =>
         <>
-          <Paper sx={{ padding: 1, backgroundColor: "#00000022", borderRadius: '10px', width: '100%' }}>
+          <Paper sx={{ padding: 1, backgroundColor: "#ffffff55", borderRadius: '10px', width: '100%' }}>
             <Grid container alignItems="center">
               <Grid size={8}>
                 <Box component="img" src={thisEvent.logo} sx={{ width: "200px" }} />
@@ -97,9 +97,10 @@ export default function FinderEvents({ foundlingId }: Params) {
         <Stack direction="column" spacing={1}>
           {puzzleEvents.map((thisEvent) =>
             <>
-              <Paper sx={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px', backgroundColor: "#00000022", borderRadius: '10px' }}>
-                <Box display="flex" justifyContent="center" sx={{ paddingBottom: '10px' }}>
-                  <Box component="img" src={thisEvent.logo} sx={{ width: "250px" }} />
+              <Paper sx={{ padding: '3px', paddingLeft: '10px', paddingRight: '10px', backgroundColor: "#ffffff55", borderRadius: '10px' }}>
+
+                <Box display="flex" justifyContent="center" sx={{ padding: '1px' }}>
+                  <Box component="img" src={thisEvent.logo} sx={{ width: "200px" }} />
                 </Box>
                 <Box sx={{ textAlign: "center" }} alignItems='center'>
                   <FinderEventList foundlingId={foundlingId} eventId={thisEvent.id} />
