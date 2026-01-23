@@ -136,12 +136,10 @@ export default function VolunteerScreen() {
           <Stack direction="column" spacing={1} textAlign={"left"}>
 
             <Grid container>
-              <Grid size={11}><Typography variant="h5">Your Details</Typography></Grid>
-              <Grid size={1}>
+              <Grid size={10.5}><Typography variant="h5">Your Details</Typography></Grid>
+              <Grid size={1.5}>
                 <Box sx={{ textAlign: "center" }} alignItems='center'>
-                  <IconButton onClick={submit} disabled={formFilled()} sx={{ color: '#e33e7f', padding: '3px', marginTop: '2px', border: 2 }} size='large'>
-                    <SaveIcon />
-                  </IconButton>
+                  <IconButton onClick={submit} disabled={formFilled()} sx={{ color: '#e33e7f', padding: '3px', marginTop: '2px', border: 2 }} size='large'><SaveIcon /></IconButton>
                 </Box>
               </Grid>
             </Grid>
@@ -152,12 +150,15 @@ export default function VolunteerScreen() {
                   <TextField name="firstName" label="First Name" required size='small' value={formData.firstName} onChange={handleChange} />
                   <TextField name="lastName" label="Last Name(s)" size='small' value={formData.lastName} onChange={handleChange} />
                 </Stack>
-                <TextField name="displayName" label="Name to Display" required size='small' value={formData.displayName} onChange={handleChange} />
+                <TextField name="displayName" label="Name to Show Other Puzzlers" required size='small' value={formData.displayName} onChange={handleChange} />
               </Stack>
             </FormGroup>
 
-            {profile && <FinderEvents foundlingId={formData.id} />}
-
+            {profile ?
+              <FinderEvents foundlingId={formData.id} />
+              :
+              <Typography>Enter and Save your details to find events!</Typography>
+            }
           </Stack>
         </Paper>
         :

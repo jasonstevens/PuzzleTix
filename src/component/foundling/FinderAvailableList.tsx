@@ -55,25 +55,21 @@ export default function FinderAvailableList({ foundlingId }: Params) {
         <>
           {foundlingEvents.length > 0 &&
             <>
-              <Typography variant='h5' sx={{ marginBottom: '10px' }}>Registered Events</Typography>
-              <Grid container sx={{ border: 0 }} spacing={1}>
-
+              <Typography variant='h6' sx={{ marginBottom: '10px', fontWeight: 700 }}>Your Events</Typography>
+              <Grid container alignItems="center">
                 {foundlingEvents?.map((thisEvent) =>
                   <>
-                    <Grid container size={12} sx={{ border: 0 }}>
-                      <Grid size={8}>
-                        <Box component="img" src={getEventById(thisEvent.eventId).logo} sx={{ width: "200px" }} />
-                      </Grid>
-                      <Grid size={4}>
-                        <FoundlingEventUpdatePopup foundlingResponseId={thisEvent.id}
-                          puzzleEvent={getEventById(thisEvent.eventId)}
-                          comments={thisEvent.comments ? thisEvent.comments : ''}
-                          pair={thisEvent.pair == true ? true : false}
-                          team={thisEvent.team == true ? true : false}
-                          onRefresh={onRefresh} />
-                      </Grid>
+                    <Grid size={8}>
+                      <Box component="img" src={getEventById(thisEvent.eventId).logo} sx={{ width: "200px" }} />
                     </Grid>
-
+                    <Grid size={4}>
+                      <FoundlingEventUpdatePopup foundlingResponseId={thisEvent.id}
+                        puzzleEvent={getEventById(thisEvent.eventId)}
+                        comments={thisEvent.comments ? thisEvent.comments : ''}
+                        pair={thisEvent.pair == true ? true : false}
+                        team={thisEvent.team == true ? true : false}
+                        onRefresh={onRefresh} />
+                    </Grid>
                   </>
                 )}
               </Grid>
@@ -84,10 +80,8 @@ export default function FinderAvailableList({ foundlingId }: Params) {
             <>
               <Divider sx={{ marginTop: '10px', marginBottom: '10px' }} />
 
-              <Typography variant='h5' sx={{ marginBottom: '10px' }}>Available Events</Typography>
-
+              <Typography variant='h6' sx={{ marginBottom: '10px', fontWeight: 700 }}>Available Events</Typography>
               <Grid container alignItems="center">
-
                 {puzzleEvents.map((thisEvent) =>
                   <>
                     <Grid size={8}>
@@ -102,15 +96,9 @@ export default function FinderAvailableList({ foundlingId }: Params) {
             </>
           }
         </>
-
         :
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <CircularProgress />
-        </div>
+        <div style={{ display: 'flex', justifyContent: 'center' }}><CircularProgress /></div>
       }
-
     </>
-
-
   );
 };
