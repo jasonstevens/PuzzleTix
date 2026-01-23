@@ -82,6 +82,9 @@ const schema = a.schema({
     pair: a.boolean(),
     team: a.boolean(),
     comments: a.string(),
+    status: a.string(),
+    pairGoal: a.string(),
+    teamGoal: a.string(),
     foundling: a.belongsTo('Foundling', 'foundlingId')
   })
     .secondaryIndexes((index) => [

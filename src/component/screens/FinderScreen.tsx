@@ -1,15 +1,13 @@
 import { Box, FormGroup, Stack, TextField, Typography, Paper, CircularProgress, IconButton, Grid } from "@mui/material";
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import SaveIcon from '@mui/icons-material/Save';
 
 import logo from '../../assets/puzzletix-white.svg'
 
 import type { Schema } from "../../../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
 import { useEffect, useState } from "react";
-
-import SaveIcon from '@mui/icons-material/Save';
-
 
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
@@ -26,6 +24,7 @@ export default function VolunteerScreen() {
   const { user } = useAuthenticator((context) => [context.user]);
 
   const [loaded, setLoaded] = useState(false);
+  const [profile, setProfile] = useState(true);
 
   const [formData, setFormData] = useState({
     id: '',
@@ -65,17 +64,18 @@ export default function VolunteerScreen() {
         performance: foundling.performance ? foundling.performance : '',
 
       }));
+    } else {
+      setProfile(false);
     }
 
     setLoaded(true);
-
   };
 
   useEffect(() => { fetchData(); }, []);
 
   const formFilled = (): boolean => {
     return !(formData
-      && formData.firstName != ''
+      && formData.firstName != '' && formData.displayName != ''
     );
   }
 
@@ -121,6 +121,9 @@ export default function VolunteerScreen() {
         }
         return;
       }
+      console.log('Done')
+      formData.id = data!.id;
+      setProfile(true);
     }
   }
 
@@ -162,23 +165,12 @@ export default function VolunteerScreen() {
               </Stack>
             </FormGroup>
 
-            {/* <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-              <CommentIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
-              <TextField name="goal" label="Additional Comments" size='small' value={formData.goal} multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
-            </Box> */}
-
-            {formData.id != '' &&
-              <>
-                <FinderEvents foundlingId={formData.id} />
-              </>
-            }
+            {profile && <FinderEvents foundlingId={formData.id} />}
 
           </Stack>
         </Paper>
         :
-        <>
-          <CircularProgress size='50vw' sx={{ marginTop: '100px' }} />
-        </>
+        <CircularProgress size='100px' sx={{ marginTop: '100px' }} />
       }
 
 

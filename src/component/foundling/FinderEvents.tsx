@@ -1,22 +1,17 @@
-import { Box, Tabs, Tab, Paper, Grid, Stack } from "@mui/material";
+import { Box, Tabs, Tab, Paper, Stack } from "@mui/material";
 
 import { Amplify } from 'aws-amplify';
 import outputs from '../../../amplify_outputs.json';
 import { getEvents } from "../data/PuzzleEvent";
 import React from "react";
-import FoundlingEventPopup from "./FoundlingEventRegisterPopup";
 import FinderEventList from "./FinderEventList";
 import FinderResponseList from "./FinderResponseList";
+import FinderAvailableList from "./FinderAvailableList";
+
 
 Amplify.configure(outputs)
 
 
-// import { useAuthenticator } from '@aws-amplify/ui-react';
-// import type { Schema } from "../../../amplify/data/resource";
-// import { generateClient } from "aws-amplify/data";
-// import { useEffect, useState } from "react";
-// const client = generateClient<Schema>();
-// type FoundlingEvent = Schema['FoundlingEvent']['type'];
 interface Params {
   foundlingId: string;
 }
@@ -46,28 +41,6 @@ export default function FinderEvents({ foundlingId }: Params) {
 
   const puzzleEvents = getEvents().filter(f => (f.finder));
 
-
-  // const { user } = useAuthenticator((context) => [context.user]);
-  // const [foundlingEvents, setFoundlingEvents] = useState<FoundlingEvent[]>();
-
-  // const fetchData = async () => {
-  //   console.log('Load')
-  //   const { data: foundlingEvents, errors: eventErrors } = await client.models.FoundlingEvent.listFoundlingEventsByFoundling({ foundlingId: user!.signInDetails!.loginId! })
-
-  //   setFoundlingEvents(foundlingEvents);
-
-  //   if (eventErrors) {
-  //     console.error("Error:", eventErrors);
-  //     console.log(foundlingEvents);
-  //     for (const error of eventErrors) {
-  //       console.error(error.message);
-  //     }
-  //     return;
-  //   }
-  // };
-
-  // useEffect(() => { fetchData(); }, []);
-
   return (
     <>
       <Tabs onChange={handleTabChange} value={value}>
@@ -77,24 +50,12 @@ export default function FinderEvents({ foundlingId }: Params) {
       </Tabs>
 
       <CustomTabPanel value={value} index={0}>
-        {puzzleEvents.map((thisEvent) =>
-          <>
-            <Grid container alignItems="center">
-              <Grid size={8}>
-                <Box component="img" src={thisEvent.logo} sx={{ width: "200px" }} />
-              </Grid>
-              <Grid size={4}>
-                <FoundlingEventPopup puzzleEvent={thisEvent} foundlingId={foundlingId} />
-              </Grid>
-            </Grid>
-          </>
-        )}
+        <FinderAvailableList foundlingId={foundlingId} />
       </CustomTabPanel>
 
       <CustomTabPanel value={value} index={1}>
         <FinderResponseList foundlingId={foundlingId} />
       </CustomTabPanel>
-
 
       <CustomTabPanel value={value} index={2} >
         <Stack direction="column" spacing={1}>

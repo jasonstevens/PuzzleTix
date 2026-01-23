@@ -27,8 +27,9 @@ interface FoundlingData {
   foundlingId: string,
   displayName?: string,
   comments?: string,
-
+  status?: string,
 }
+
 
 export default function FinderEventList({ foundlingId, eventId }: Params) {
 
@@ -37,7 +38,7 @@ export default function FinderEventList({ foundlingId, eventId }: Params) {
   const fetchData = async () => {
     console.log('Load')
     const { data: foundlingEvents, errors: eventErrors } = await client.models.FoundlingEvent.listFoundlingEventsByEvent({ eventId: eventId },
-      { selectionSet: ['id', 'pair', 'team', 'foundlingId', 'comments', 'foundling.displayName'] },
+      { selectionSet: ['id', 'pair', 'team', 'foundlingId', 'comments', 'status', 'foundling.displayName'] },
     )
 
     const f = foundlingEvents.map(thisRec => {
@@ -45,12 +46,13 @@ export default function FinderEventList({ foundlingId, eventId }: Params) {
         id: thisRec.id,
         pair: thisRec.pair ? thisRec.pair : false,
         team: thisRec.team ? thisRec.team : false,
+        status: thisRec.status ? thisRec.status : '',
         comments: thisRec.comments ? thisRec.comments : '',
         foundlingId: thisRec.foundlingId,
         displayName: thisRec.foundling.displayName ? thisRec.foundling?.displayName : 'Woot',
       }
       return z;
-    });
+    }).filter(anEvent => { return anEvent.status != 'CF' && anEvent.status != 'CE' && anEvent.status != 'CC' && anEvent.status != 'CG' });
 
     setFoundlingEvents(f);
 

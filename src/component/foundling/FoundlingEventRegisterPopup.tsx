@@ -27,7 +27,7 @@ interface Form {
     team: boolean;
 }
 
-export default function FoundlingEventPopup({ puzzleEvent, foundlingId }: Params) {
+export default function FoundlingEventRegisterPopup({ puzzleEvent, foundlingId }: Params) {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -81,7 +81,6 @@ export default function FoundlingEventPopup({ puzzleEvent, foundlingId }: Params
                 <DialogTitle>{puzzleEvent.name}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-
                     </DialogContentText>
                     <form onSubmit={handleSubmit} id="subscription-form">
                         <FormControlLabel control={<Checkbox name="pair" />} label="Seeking a Pair" sx={{ height: '30px' }} />
