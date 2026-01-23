@@ -17,8 +17,12 @@ interface Params {
 
 export default function FinderAvailableList({ foundlingId }: Params) {
 
-
   const [foundlingEvents, setFoundlingEvents] = useState<FoundlingEvent[]>();
+
+  const onRefresh = () => {
+    console.log('Refresh');
+    fetchData();
+  }
 
   const fetchData = async () => {
     console.log('Load')
@@ -65,7 +69,8 @@ export default function FinderAvailableList({ foundlingId }: Params) {
                           puzzleEvent={getEventById(thisEvent.eventId)}
                           comments={thisEvent.comments ? thisEvent.comments : ''}
                           pair={thisEvent.pair == true ? true : false}
-                          team={thisEvent.team == true ? true : false} />
+                          team={thisEvent.team == true ? true : false}
+                          onRefresh={onRefresh} />
                       </Grid>
                     </Grid>
 
@@ -89,7 +94,7 @@ export default function FinderAvailableList({ foundlingId }: Params) {
                       <Box component="img" src={thisEvent.logo} sx={{ width: "200px" }} />
                     </Grid>
                     <Grid size={4}>
-                      <FoundlingEventRegisterPopup puzzleEvent={thisEvent} foundlingId={foundlingId} />
+                      <FoundlingEventRegisterPopup puzzleEvent={thisEvent} foundlingId={foundlingId} onRefresh={onRefresh} />
                     </Grid>
                   </>
                 )}

@@ -1,13 +1,7 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import React from 'react';
+import { FormControl, InputLabel, MenuItem, Select, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Checkbox, FormControlLabel } from '@mui/material';
+
 import type { PuzzleEvent } from '../data/PuzzleEvent';
-import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select } from '@mui/material';
 
 import type { Schema } from "../../../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
@@ -20,6 +14,7 @@ interface Params {
     pair: boolean;
     team: boolean;
     comments: string;
+    onRefresh: () => void;
 }
 
 interface Form {
@@ -35,7 +30,7 @@ const status = [
     { status: 'CC', description: 'I\'m no longer attending' },
 ];
 
-export default function FoundlingEventCancelPopup({ puzzleEvent, foundlingResponseId, pair, team, comments }: Params) {
+export default function FoundlingEventUpdatePopup({ puzzleEvent, foundlingResponseId, pair, team, comments, onRefresh }: Params) {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -61,6 +56,7 @@ export default function FoundlingEventCancelPopup({ puzzleEvent, foundlingRespon
         console.log(update);
         handleUpdate(update);
         handleClose();
+        onRefresh();
     };
 
 

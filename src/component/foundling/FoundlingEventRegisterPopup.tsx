@@ -1,13 +1,7 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import React from 'react';
+import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Checkbox, FormControlLabel } from '@mui/material';
+
 import type { PuzzleEvent } from '../data/PuzzleEvent';
-import { Checkbox, FormControlLabel } from '@mui/material';
 
 import type { Schema } from "../../../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
@@ -17,6 +11,7 @@ const client = generateClient<Schema>();
 interface Params {
     puzzleEvent: PuzzleEvent;
     foundlingId: string;
+    onRefresh: () => void;
 }
 
 interface Form {
@@ -27,7 +22,7 @@ interface Form {
     team: boolean;
 }
 
-export default function FoundlingEventRegisterPopup({ puzzleEvent, foundlingId }: Params) {
+export default function FoundlingEventRegisterPopup({ puzzleEvent, foundlingId, onRefresh }: Params) {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -54,6 +49,7 @@ export default function FoundlingEventRegisterPopup({ puzzleEvent, foundlingId }
         console.log(create)
         handleCreate(create);
         handleClose();
+        onRefresh();
     };
 
 
