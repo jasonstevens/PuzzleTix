@@ -58,17 +58,12 @@ export default function Nav() {
 
   return (
     <Box sx={{
-      display: 'flex',
-      backgroundImage: `url(${Image})`,
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: 'top 55px left',
-      backgroundAttachment: 'fixed',
       minHeight: '100vh',
       overscrollBehavior: 'none'
     }}>
 
       <CssBaseline />
-      <AppBar position="fixed" sx={{ background: 'linear-gradient(110deg, rgba(255, 222, 89, 1), rgba(255, 102, 196, 1))' }}>
+      <AppBar sx={{ background: 'linear-gradient(110deg, rgba(255, 222, 89, 1), rgba(255, 102, 196, 1))' }}>
         {isAuth() &&
           <>
             <Toolbar disableGutters>
@@ -82,15 +77,13 @@ export default function Nav() {
         }
       </AppBar>
 
-
-
       {isAuth() ?
         <Container sx={{ marginTop: '70px', width: { lg: '60vw', md: '60vw' } }}>
           <Outlet />
         </Container>
         :
         <Container sx={{ marginTop: 10 }}>
-          <Box component="img" src={logo} sx={{ maxWidth: "300px" }} />
+          <Box component="img" src={logo} sx={{ width: '280px', maxWidth: "280px" }} />
           <ThemeProvider theme={sTheme}>
             <Paper elevation={10} sx={{ margin: '10px' }}>
               <Authenticator>

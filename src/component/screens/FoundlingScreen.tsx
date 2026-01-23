@@ -1,4 +1,4 @@
-import { Box, FormGroup, Stack, TextField, Typography, Paper, CircularProgress, IconButton, Grid, Container } from "@mui/material";
+import { Box, FormGroup, Stack, TextField, Typography, Paper, CircularProgress, IconButton, Grid } from "@mui/material";
 
 import SaveIcon from '@mui/icons-material/Save';
 
@@ -128,13 +128,11 @@ export default function VolunteerScreen() {
 
   return (
     <>
-      <Box component="img" src={logo} sx={{ width: '300px', maxWidth: "300px" }} />
+      <Box component="img" src={logo} sx={{ width: '280px', maxWidth: "280px" }} />
 
       {loaded ?
         <Box sx={{ width: '100%' }}>
-          <Paper sx={{ padding: 1, backgroundColor: "#ffffff88", borderRadius: '15px' }} >
-
-
+          <Paper sx={{ padding: 1, backgroundColor: "#ffffff77", borderRadius: '15px', marginBottom: '15px' }} >
             <Stack direction="column" spacing={1} textAlign={"left"}>
 
               <Grid container>
