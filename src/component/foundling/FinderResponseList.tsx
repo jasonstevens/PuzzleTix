@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { CircularProgress, Grid, Typography } from "@mui/material";
 
 import type { Schema } from "../../../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
@@ -64,28 +64,35 @@ export default function FinderResponseList({ foundlingId }: Params) {
 
   return (
     <>
-      <Grid container sx={{ border: 0 }} spacing={1}>
+      {foundlingEvents ?
+        <Grid container sx={{ border: 0 }} spacing={1}>
 
-        {foundlingEvents?.map((thisEvent) =>
-          <>
-            <Grid container size={12} sx={{ border: 0 }}>
-              <Grid size={3} textAlign={"left"}>From:</Grid>
-              <Grid size={9} textAlign={"left"}>
-                <Typography sx={{ fontWeight: 800 }}>{thisEvent.displayName}</Typography>
+          {foundlingEvents?.map((thisEvent) =>
+            <>
+              <Grid container size={12} sx={{ border: 0 }}>
+                <Grid size={3} textAlign={"left"}>From:</Grid>
+                <Grid size={9} textAlign={"left"}>
+                  <Typography sx={{ fontWeight: 800 }}>{thisEvent.displayName}</Typography>
+                </Grid>
+
+                <Grid size={3} textAlign={"left"}>Event:</Grid>
+                <Grid size={9} textAlign={"left"}>{getEventById(thisEvent.eventId).name}</Grid>
+
+                <Grid size={3} textAlign={"left"}>Message:</Grid>
+                <Grid size={9} textAlign={"left"} sx={{ border: 0 }}>
+                  <Typography>{thisEvent.comments}</Typography>
+                </Grid>
               </Grid>
 
-              <Grid size={3} textAlign={"left"}>Event:</Grid>
-              <Grid size={9} textAlign={"left"}>{getEventById(thisEvent.eventId).name}</Grid>
+            </>
+          )}
+        </Grid >
+        :
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <CircularProgress />
+        </div>
+      }
 
-              <Grid size={3} textAlign={"left"}>Message:</Grid>
-              <Grid size={9} textAlign={"left"} sx={{ border: 0 }}>
-                <Typography>{thisEvent.comments}</Typography>
-              </Grid>
-            </Grid>
-
-          </>
-        )}
-      </Grid >
     </>
   );
 };

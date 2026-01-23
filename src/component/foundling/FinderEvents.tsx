@@ -70,9 +70,15 @@ export default function FinderEvents({ foundlingId }: Params) {
 
   return (
     <>
-      {puzzleEvents.map((thisEvent) =>
-        <>
-          <Paper sx={{ padding: 1, backgroundColor: "#ffffff55", borderRadius: '10px', width: '100%' }}>
+      <Tabs onChange={handleTabChange} value={value}>
+        <Tab label="Events" sx={{ fontWeight: '800' }} />
+        <Tab label="Messages" sx={{ fontWeight: '800' }} />
+        <Tab label="Puzzlers" sx={{ fontWeight: '800' }} />
+      </Tabs>
+
+      <CustomTabPanel value={value} index={0}>
+        {puzzleEvents.map((thisEvent) =>
+          <>
             <Grid container alignItems="center">
               <Grid size={8}>
                 <Box component="img" src={thisEvent.logo} sx={{ width: "200px" }} />
@@ -81,19 +87,16 @@ export default function FinderEvents({ foundlingId }: Params) {
                 <FoundlingEventPopup puzzleEvent={thisEvent} foundlingId={foundlingId} />
               </Grid>
             </Grid>
-          </Paper>
-        </>
-      )}
+          </>
+        )}
+      </CustomTabPanel>
 
-      <Tabs onChange={handleTabChange} value={value}>
-        <Tab label="Messages" sx={{ fontWeight: '800' }} />
-        <Tab label="Puzzlers" sx={{ fontWeight: '800' }} />
-      </Tabs>
-      <CustomTabPanel value={value} index={0}>
+      <CustomTabPanel value={value} index={1}>
         <FinderResponseList foundlingId={foundlingId} />
       </CustomTabPanel>
 
-      <CustomTabPanel value={value} index={1} >
+
+      <CustomTabPanel value={value} index={2} >
         <Stack direction="column" spacing={1}>
           {puzzleEvents.map((thisEvent) =>
             <>

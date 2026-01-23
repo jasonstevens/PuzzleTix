@@ -1,4 +1,4 @@
-import { Box, Button, FormGroup, Stack, TextField, Typography, Divider, Paper, CircularProgress } from "@mui/material";
+import { Box, FormGroup, Stack, TextField, Typography, Paper, CircularProgress, IconButton, Grid } from "@mui/material";
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
@@ -7,6 +7,9 @@ import logo from '../../assets/puzzletix-white.svg'
 import type { Schema } from "../../../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
 import { useEffect, useState } from "react";
+
+import SaveIcon from '@mui/icons-material/Save';
+
 
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
@@ -126,49 +129,52 @@ export default function VolunteerScreen() {
       <Box component="img" src={logo} sx={{ width: '300px', maxWidth: "300px" }} />
 
       {loaded ?
-        <Paper sx={{ padding: 1, paddingTop: 0, backgroundColor: "#ffffff88", borderRadius: '15px' }}>
+        <Paper sx={{ padding: 1, backgroundColor: "#ffffff88", borderRadius: '15px' }}>
 
-          <Stack direction="column" spacing={2}>
-            <Stack direction="column" spacing={1} textAlign={"left"}>
-              <Divider />
-              <Typography variant="h5">Finder Profile</Typography>
+          <Stack direction="column" spacing={1} textAlign={"left"}>
 
+            <Grid container>
+              <Grid size={11}>
 
-              <FormGroup>
-                <Stack direction="row" spacing={1}>
-                  <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
-                  <TextField name="firstName" label="First Name" required size='small' value={formData.firstName} onChange={handleChange} />
-                  <TextField name="lastName" label="Last Name(s)" size='small' value={formData.lastName} onChange={handleChange} />
-                </Stack>
-              </FormGroup>
+                <Typography variant="h5">Finder Profile</Typography>
+              </Grid>
+              <Grid size={1}>
+                <Box sx={{ textAlign: "center" }} alignItems='center'>
+                  <IconButton onClick={submit} disabled={formFilled()} sx={{ color: '#e33e7f', padding: '3px', marginTop: '2px', border: 2 }} size='large'>
+                    <SaveIcon />
+                  </IconButton>
+                </Box>
+              </Grid>
+            </Grid>
 
-              <FormGroup>
-                <Stack direction="row" spacing={1}>
-                  <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
-                  <TextField name="displayName" label="Name to Display" required size='small' value={formData.displayName} onChange={handleChange} />
-                </Stack>
-              </FormGroup>
+            <FormGroup>
+              <Stack direction="row" spacing={1}>
+                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
+                <TextField name="firstName" label="First Name" required size='small' value={formData.firstName} onChange={handleChange} />
+                <TextField name="lastName" label="Last Name(s)" size='small' value={formData.lastName} onChange={handleChange} />
+              </Stack>
+            </FormGroup>
 
-              {/* <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+            <FormGroup>
+              <Stack direction="row" spacing={1}>
+                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
+                <TextField name="displayName" label="Name to Display" required size='small' value={formData.displayName} onChange={handleChange} />
+              </Stack>
+            </FormGroup>
+
+            {/* <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
               <CommentIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
               <TextField name="goal" label="Additional Comments" size='small' value={formData.goal} multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} />
             </Box> */}
-              <Box sx={{ textAlign: "center" }} alignItems='center'>
-                <Button sx={{ m: 1 }} onClick={submit} variant="contained" disabled={formFilled()}>Save</Button>
-              </Box>
 
-              {formData.id != '' &&
-                <>
-                  <Divider />
-                  <Typography variant="h5">Available Events</Typography>
-                  <FinderEvents foundlingId={formData.id} />
-                </>
-              }
+            {formData.id != '' &&
+              <>
+                <FinderEvents foundlingId={formData.id} />
+              </>
+            }
 
-            </Stack>
           </Stack>
         </Paper>
-
         :
         <>
           <CircularProgress size='50vw' sx={{ marginTop: '100px' }} />
