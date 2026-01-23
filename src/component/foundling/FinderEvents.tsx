@@ -1,16 +1,10 @@
 import { Box, Tabs, Tab, Paper, Stack } from "@mui/material";
 
-import { Amplify } from 'aws-amplify';
-import outputs from '../../../amplify_outputs.json';
 import { getEvents } from "../data/PuzzleEvent";
 import React from "react";
 import FinderEventList from "./FinderEventList";
 import FinderResponseList from "./FinderResponseList";
 import FinderAvailableList from "./FinderAvailableList";
-
-
-Amplify.configure(outputs)
-
 
 interface Params {
   foundlingId: string;

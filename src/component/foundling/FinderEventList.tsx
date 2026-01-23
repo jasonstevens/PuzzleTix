@@ -4,15 +4,10 @@ import type { Schema } from "../../../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
 import { useEffect, useState } from "react";
 
-import { Amplify } from 'aws-amplify';
-import outputs from '../../../amplify_outputs.json';
 import FoundlingResponsePopup from "./FoundlingResponsePopup";
 
 import GroupIcon from '@mui/icons-material/Group';
 import GroupsIcon from '@mui/icons-material/Groups';
-
-
-Amplify.configure(outputs)
 
 const client = generateClient<Schema>();
 interface Params {
@@ -29,7 +24,6 @@ interface FoundlingData {
   comments?: string,
   status?: string,
 }
-
 
 export default function FinderEventList({ foundlingId, eventId }: Params) {
 

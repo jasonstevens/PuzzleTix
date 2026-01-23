@@ -4,11 +4,7 @@ import type { Schema } from "../../../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
 import { useEffect, useState } from "react";
 
-import { Amplify } from 'aws-amplify';
-import outputs from '../../../amplify_outputs.json';
 import { getEventById } from "../data/PuzzleEvent";
-
-Amplify.configure(outputs)
 
 const client = generateClient<Schema>();
 interface Params {

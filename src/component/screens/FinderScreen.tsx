@@ -1,6 +1,5 @@
 import { Box, FormGroup, Stack, TextField, Typography, Paper, CircularProgress, IconButton, Grid } from "@mui/material";
 
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import SaveIcon from '@mui/icons-material/Save';
 
 import logo from '../../assets/puzzletix-white.svg'
@@ -137,10 +136,7 @@ export default function VolunteerScreen() {
           <Stack direction="column" spacing={1} textAlign={"left"}>
 
             <Grid container>
-              <Grid size={11}>
-
-                <Typography variant="h5">Finder Profile</Typography>
-              </Grid>
+              <Grid size={11}><Typography variant="h5">Your Details</Typography></Grid>
               <Grid size={1}>
                 <Box sx={{ textAlign: "center" }} alignItems='center'>
                   <IconButton onClick={submit} disabled={formFilled()} sx={{ color: '#e33e7f', padding: '3px', marginTop: '2px', border: 2 }} size='large'>
@@ -151,16 +147,11 @@ export default function VolunteerScreen() {
             </Grid>
 
             <FormGroup>
-              <Stack direction="row" spacing={1}>
-                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
-                <TextField name="firstName" label="First Name" required size='small' value={formData.firstName} onChange={handleChange} />
-                <TextField name="lastName" label="Last Name(s)" size='small' value={formData.lastName} onChange={handleChange} />
-              </Stack>
-            </FormGroup>
-
-            <FormGroup>
-              <Stack direction="row" spacing={1}>
-                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}><AccountCircle sx={{ color: 'action.active', my: 0.75 }} /></Box>
+              <Stack direction="column" spacing={1.5}>
+                <Stack direction="row" spacing={1}>
+                  <TextField name="firstName" label="First Name" required size='small' value={formData.firstName} onChange={handleChange} />
+                  <TextField name="lastName" label="Last Name(s)" size='small' value={formData.lastName} onChange={handleChange} />
+                </Stack>
                 <TextField name="displayName" label="Name to Display" required size='small' value={formData.displayName} onChange={handleChange} />
               </Stack>
             </FormGroup>
@@ -172,7 +163,6 @@ export default function VolunteerScreen() {
         :
         <CircularProgress size='100px' sx={{ marginTop: '100px' }} />
       }
-
 
     </>
   );
