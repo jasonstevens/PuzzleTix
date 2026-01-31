@@ -84,13 +84,15 @@ export default function FoundlingEventRegisterPopup({ puzzleEvent, foundlingId, 
 
                         <TextField
                             autoFocus
+                            multiline
+                            rows="4"
                             margin="dense"
                             id="name"
                             name="comments"
                             label="Comments"
                             type="comments"
                             fullWidth
-                            variant="standard"
+                            variant="outlined"
                         />
                     </form>
                 </DialogContent>

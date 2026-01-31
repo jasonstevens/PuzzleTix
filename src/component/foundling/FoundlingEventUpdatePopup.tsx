@@ -97,7 +97,6 @@ export default function FoundlingEventUpdatePopup({ puzzleEvent, foundlingRespon
                         <FormControlLabel control={<Checkbox name="pair" defaultChecked={pair} />} label="Seeking a Pair" sx={{ height: '30px' }} />
                         <FormControlLabel control={<Checkbox name="team" defaultChecked={team} />} label="Seeking a Team" sx={{ height: '30px' }} />
 
-
                         <TextField
                             autoFocus
                             multiline
@@ -105,7 +104,7 @@ export default function FoundlingEventUpdatePopup({ puzzleEvent, foundlingRespon
                             margin="dense"
                             id="name"
                             name="comments"
-                            label=""
+                            label="Comments"
                             type="comments"
                             fullWidth
                             variant="outlined"

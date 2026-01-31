@@ -78,7 +78,7 @@ export default function Nav() {
       </AppBar>
 
       {isAuth() ?
-        <Container sx={{ marginTop: '70px', width: { lg: '60vw', md: '60vw' } }}>
+        <Container sx={{ width: { lg: '60vw', md: '60vw' } }}>
           <Outlet />
         </Container>
         :

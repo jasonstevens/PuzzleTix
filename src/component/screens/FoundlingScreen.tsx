@@ -128,7 +128,7 @@ export default function VolunteerScreen() {
 
   return (
     <>
-      <Box component="img" src={logo} sx={{ width: '280px', maxWidth: "280px" }} />
+      <Box component="img" src={logo} sx={{ width: '280px', maxWidth: "280px", marginTop: '75px' }} />
 
       {loaded ?
         <Box sx={{ width: '100%' }}>
@@ -151,6 +151,7 @@ export default function VolunteerScreen() {
                     <TextField name="lastName" label="Last Name(s)" size='small' value={formData.lastName} onChange={handleChange} />
                   </Stack>
                   <TextField name="displayName" label="Name to Show Other Puzzlers" required size='small' value={formData.displayName} onChange={handleChange} sx={{ maxWidth: '400px' }} />
+                  <TextField name="goal" label="Describe Yourself as a Puzzler" size='small' value={formData.goal} onChange={handleChange} sx={{ maxWidth: '400px' }} multiline rows="2" />
                 </Stack>
               </FormGroup>
 
