@@ -20,7 +20,7 @@ export interface PuzzleEvent {
 }
 
 export const getEvents = () => {
-  return data;
+  return data.filter(event => event.active != false);
 }
 
 export function getEvent(shortName: string): PuzzleEvent {
@@ -45,6 +45,7 @@ const data: PuzzleEvent[] =
       spectators: 3,
       finder: true,
       divisions: [1, 2, 4],
+      active: false,
     },
     {
       id: 11,
