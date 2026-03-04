@@ -62,6 +62,19 @@ const schema = a.schema({
     displayName: a.boolean(),
   }).authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
 
+  Waiter: a.model({
+    eventId: a.integer(),
+    firstName: a.string(),
+    lastName: a.string(),
+    email: a.string(),
+    phone: a.string(),
+    comments: a.string(),
+    div1: a.boolean(),
+    div2: a.boolean(),
+    div3: a.boolean(),
+  }).authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
+
+
   Foundling: a.model({
     loginId: a.string().required(),
     displayName: a.string(),
