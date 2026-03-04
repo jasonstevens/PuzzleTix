@@ -102,8 +102,7 @@ export default function WaitListScreen() {
             {!submitted ?
               <Stack direction="column" spacing={2}>
                 <Stack direction="column" spacing={1} textAlign={"left"}>
-                  <Typography>To register for the event wait list, enter your details and select which divisions you'd like to register for. Only divisions
-                    that are currently sold out are listed.
+                  <Typography>Enter your details and select which divisions (only sold-out are listed) you'd like to register for the wait list.
                   </Typography>
                   <Divider />
                   <Typography variant="h5">Details</Typography>
