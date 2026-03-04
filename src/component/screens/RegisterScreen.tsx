@@ -3,7 +3,6 @@ import {
   Dialog, DialogTitle, DialogContentText, DialogActions, DialogContent, Select, MenuItem, Paper
 } from "@mui/material";
 import { countries } from "../Countries";
-import { CreditCard, PaymentForm } from 'react-square-web-payments-sdk';
 import InfoIcon from '@mui/icons-material/Info';
 
 import logo from '../../assets/puzzletix-white.svg'
@@ -238,20 +237,6 @@ export default function Register() {
             <Typography variant="h5">Payment</Typography>
             <Typography>Cost Summary Here</Typography>
 
-            <PaymentForm
-              applicationId="sandbox-sq0idb-8HmJ8A4B5YSiqalsBJxbVw"
-              cardTokenizeResponseReceived={(token, verifiedBuyer) => {
-                console.log('token:', token);
-                console.log('verifiedBuyer:', verifiedBuyer);
-              }}
-              locationId='LH6VET0JMRVNY'
-            >
-
-              {/* <GooglePay /> */}
-
-              <CreditCard />
-
-            </PaymentForm>
           </Stack>
         </Stack>
       </Paper >
