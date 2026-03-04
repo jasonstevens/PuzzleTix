@@ -10,6 +10,8 @@ const Auth = React.lazy(() => import('./component/core/Auth'));
 const Nav = React.lazy(() => import('./component/core/Nav'));
 const RegisterScreen = React.lazy(() => import('./component/screens/RegisterScreen'));
 const WaitScreen = React.lazy(() => import('./component/screens/WaitScreen'));
+
+const WaiterScreen = React.lazy(() => import('./component/screens/WaiterScreen'));
 const VolunteerScreen = React.lazy(() => import('./component/screens/VolunteerScreen'));
 const SpectatorScreen = React.lazy(() => import('./component/screens/SpectatorScreen'));
 const FoundlingScreen = React.lazy(() => import('./component/screens/FoundlingScreen'));
@@ -17,6 +19,7 @@ const FoundlingScreen = React.lazy(() => import('./component/screens/FoundlingSc
 const VolunteerListScreen = React.lazy(() => import('./component/screens/VolunteerListScreen'));
 const SpectatorListScreen = React.lazy(() => import('./component/screens/SpectatorListScreen'));
 const FoundlingListScreen = React.lazy(() => import('./component/screens/FoundlingListScreen'));
+const WaiterListScreen = React.lazy(() => import('./component/screens/WaiterListScreen'));
 const FoundlingEventListScreen = React.lazy(() => import('./component/screens/FoundlingEventListScreen'));
 const FoundlingResponseListScreen = React.lazy(() => import('./component/screens/FoundlingResponseListScreen'));
 
@@ -41,13 +44,16 @@ const App = () => {
             <Route path="register" element={<RegisterScreen />} />
             <Route path="volunteer/:eventId" element={<VolunteerScreen />} />
             <Route path="spectator/:eventId" element={<SpectatorScreen />} />
+            <Route path="waitlist/:eventId" element={<WaiterScreen />} />
 
-            <Route path="consoleadmin/volunteer/:eventId" element={<VolunteerListScreen />} />
-            <Route path="consoleadmin/spectator/:eventId" element={<SpectatorListScreen />} />
+            <Route path="console/volunteer/:eventId" element={<VolunteerListScreen />} />
+            <Route path="console/spectator/:eventId" element={<SpectatorListScreen />} />
+            <Route path="console/waiter/:eventId" element={<WaiterListScreen />} />
 
-            <Route path="consoleadmin/foundling" element={<FoundlingListScreen />} />
-            <Route path="consoleadmin/foundlingevent" element={<FoundlingEventListScreen />} />
-            <Route path="consoleadmin/foundlingresponse" element={<FoundlingResponseListScreen />} />
+            <Route path="console/foundling" element={<FoundlingListScreen />} />
+            <Route path="console/foundlingevent" element={<FoundlingEventListScreen />} />
+            <Route path="console/foundlingresponse" element={<FoundlingResponseListScreen />} />
+            <Route path="console/wait" element={<WaitScreen />} />
 
             <Route path="/finder" element={<Auth />}>
               <Route element={<Nav />}>
@@ -55,7 +61,6 @@ const App = () => {
               </Route>
             </Route>
 
-            <Route path="wait" element={<WaitScreen />} />
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </Suspense>
