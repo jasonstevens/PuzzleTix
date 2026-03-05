@@ -91,7 +91,7 @@ export default function WaitListScreen() {
     <>
       {puzzleEvent != undefined ?
         <>
-          <Box component="img" src={logo} sx={{ maxWidth: "300px" }} />
+          <Box component="img" src={logo} sx={{ maxWidth: "300px" }} /><br />
           <Box component="img" src={puzzleEvent.logo} sx={{ maxWidth: "350px" }} />
           <Paper sx={{ padding: 1, paddingTop: 0, backgroundColor: "#ffffffbb", borderRadius: '15px' }}>
 
