@@ -289,7 +289,7 @@ export default function VolunteerScreen() {
                   <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                     <DirectionsRunIcon sx={{ color: 'action.active', mr: 1, my: 2 }} />
                     <FormControl sx={{ width: '100%' }}>
-                      <InputLabel>Favourite Speed Puzzling Format</InputLabel>
+                      <InputLabel>Favourite Puzzling Format</InputLabel>
                       <Select name="favouriteDivision" variant="outlined" label="Favourite Puzzling Format" required onChange={handleChange} defaultValue={formData.favouriteDivision}>
                         {divs.map((shirt) => (<MenuItem value={shirt.key}>{shirt.description}</MenuItem>))}
                       </Select>
