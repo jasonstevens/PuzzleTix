@@ -121,6 +121,42 @@ const schema = a.schema({
     )
     .authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
 
+  Puzzler: a.model({
+    loginId: a.string().required(),
+    preferredName: a.string().required(),
+    instagram: a.string(),
+    mySpeedPuzzling: a.string(),
+    eligible: a.boolean(),
+    country: a.string(),
+    otherCountry: a.string(),
+    firstEvent: a.boolean(),
+    firstEventName: a.string(),
+    youtube: a.string(),
+    favouriteArtist: a.string(),
+    favouriteStyle: a.string(),
+    favouriteDivision: a.string(),
+    favouriteCritter: a.string(),
+    puzzlerTeam: a.hasMany('PuzzlerTeam', 'puzzlerId'),
+  })
+    .secondaryIndexes((index) => [index("loginId")])
+    .authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
+
+  PuzzlerTeam: a.model({
+    puzzlerId: a.id().required(),
+    teamId: a.id().required(),
+    teamName: a.string().required(),
+    eventId: a.integer().required(),
+    member1: a.string().required(),
+    member2: a.string(),
+    member3: a.string(),
+    member4: a.string(),
+    comments: a.string(),
+    puzzler: a.belongsTo('Puzzler', 'puzzlerId')
+  })
+    .secondaryIndexes((index) => [
+      index("puzzlerId").queryField("listTeamByPuzzler")]
+    )
+    .authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

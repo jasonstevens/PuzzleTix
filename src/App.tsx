@@ -5,6 +5,7 @@ import RootScreen from './component/screens/RootScreen';
 import NoMatch from './component/NoMatch';
 import React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
+import PuzzlerScreen from './component/screens/PuzzlerScreen';
 
 const Auth = React.lazy(() => import('./component/core/Auth'));
 const Nav = React.lazy(() => import('./component/core/Nav'));
@@ -58,6 +59,12 @@ const App = () => {
             <Route path="/finder" element={<Auth />}>
               <Route element={<Nav />}>
                 <Route path="" element={<FoundlingScreen />} />
+              </Route>
+            </Route>
+
+            <Route path="/puzzler" element={<Auth />}>
+              <Route element={<Nav />}>
+                <Route path="" element={<PuzzlerScreen />} />
               </Route>
             </Route>
 
