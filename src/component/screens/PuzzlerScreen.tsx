@@ -43,17 +43,16 @@ const divs = [
 
 const ukCountry = [
   { key: "GB-ENG", description: "England" },
-  { key: "GB-IRE", description: "Northern Ireland" },
-  { key: "GB-SCL", description: "Scotland" },
-  { key: "GB-WAL", description: "Wales" },
-  { key: "GB-GUE", description: "Guernsey" },
-  { key: "GB-JER", description: "Jersey" },
-  { key: "GB-MAN", description: "Isle of Man" },
-  { key: "GB-GIB", description: "Gibraltar" },
+  { key: "GB-NIR", description: "Northern Ireland" },
+  { key: "GB-SCO", description: "Scotland" },
+  { key: "GB-WLs", description: "Wales" },
+  { key: "GG", description: "Guernsey" },
+  { key: "JE", description: "Jersey" },
+  { key: "IM", description: "Isle of Man" },
+  { key: "GI", description: "Gibraltar" },
   { key: "OT", description: "Other Overseas Territory" },
 
 ];
-
 
 export default function VolunteerScreen() {
 
@@ -213,7 +212,7 @@ export default function VolunteerScreen() {
             <Stack direction="column" spacing={1} textAlign={"left"}>
 
               <Grid container>
-                <Grid size={10.5}><Typography variant="h5">Your Details</Typography></Grid>
+                <Grid size={10.5}><Typography variant="h5">Profile</Typography></Grid>
                 <Grid size={1.5}>
                   <Box sx={{ textAlign: "center" }} alignItems='center'>
                     <IconButton onClick={submit} disabled={formFilled()} sx={{ color: '#e33e7f', padding: '3px', marginTop: '2px', border: 2 }} size='large'><SaveIcon /></IconButton>
@@ -240,10 +239,10 @@ export default function VolunteerScreen() {
 
 
                   <Divider />
-                  <Typography variant="h5">Event Information</Typography>
+                  <Typography variant="h5">Event</Typography>
 
                   <FormControlLabel control={<Checkbox sx={{ paddingLeft: 0 }} name="eligible" onChange={handleChecked} />}
-                    label="I am a resident of the UK or its Territories & Dependencies" sx={{ height: '40px' }} checked={formData.eligible} />
+                    label="I am a resident of the United Kingdom, its Territories or Crown Dependencies" checked={formData.eligible} />
 
                   {formData.eligible &&
                     <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
@@ -267,7 +266,7 @@ export default function VolunteerScreen() {
                   <Divider />
                   <Typography variant="h5">About Me</Typography>
 
-                  <FormControlLabel control={<Checkbox sx={{ paddingLeft: 0 }} name="firstEvent" onChange={handleChecked} />} label="UK Nationals is my first Puzzle Event" sx={{ height: '40px' }} checked={formData.firstEvent} />
+                  <FormControlLabel control={<Checkbox sx={{ paddingLeft: 0 }} name="firstEvent" onChange={handleChecked} />} label="UK Nationals is my first in-person puzzle event" checked={formData.firstEvent} />
 
                   {!formData.firstEvent &&
                     <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
