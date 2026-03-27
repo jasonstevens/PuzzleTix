@@ -45,7 +45,7 @@ const ukCountry = [
   { key: "GB-ENG", description: "England" },
   { key: "GB-NIR", description: "Northern Ireland" },
   { key: "GB-SCO", description: "Scotland" },
-  { key: "GB-WLs", description: "Wales" },
+  { key: "GB-WLS", description: "Wales" },
   { key: "GG", description: "Guernsey" },
   { key: "JE", description: "Jersey" },
   { key: "IM", description: "Isle of Man" },
