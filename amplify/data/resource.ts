@@ -142,7 +142,7 @@ const schema = a.schema({
     .authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
 
   PuzzlerTeam: a.model({
-    puzzlerId: a.id().required(),
+    loginId: a.id().required(),
     teamId: a.id().required(),
     teamName: a.string().required(),
     eventId: a.integer().required(),
@@ -151,10 +151,10 @@ const schema = a.schema({
     member3: a.string(),
     member4: a.string(),
     comments: a.string(),
-    puzzler: a.belongsTo('Puzzler', 'puzzlerId')
+    puzzler: a.belongsTo('Puzzler', 'loginId')
   })
     .secondaryIndexes((index) => [
-      index("puzzlerId").queryField("listTeamByPuzzler")]
+      index("loginId").queryField("listTeamByPuzzler")]
     )
     .authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
 });
