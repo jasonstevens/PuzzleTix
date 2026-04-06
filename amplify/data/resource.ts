@@ -136,7 +136,7 @@ const schema = a.schema({
     favouriteStyle: a.string(),
     favouriteDivision: a.string(),
     favouriteCritter: a.string(),
-    puzzlerTeam: a.hasMany('PuzzlerTeam', 'puzzlerId'),
+    puzzlerTeam: a.hasMany('PuzzlerTeam', 'loginId'),
   })
     .secondaryIndexes((index) => [index("loginId")])
     .authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
