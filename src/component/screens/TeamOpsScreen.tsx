@@ -5,28 +5,44 @@ import { useEffect } from "react";
 
 import { Amplify } from 'aws-amplify';
 import outputs from '../../../amplify_outputs.json';
+import { teamData } from "../data/BaseTeam";
 
 Amplify.configure(outputs)
 
 const client = generateClient<Schema>();
 
+type PT = {
+  teamName: string;
+  member1: string;
+  loginId: string;
+  eligible?: boolean;
+}
+
 export default function PuzzlerTeamScreen() {
 
-  useEffect(() => { submit(); }, []);
+  useEffect(() => {
 
-  const submit = async () => {
 
     console.log("Update")
 
-    const { data, errors } = await client.models.PuzzlerTeam.create({
-      loginId: 's.emievolved@gmail.com',
-      teamName: 'Goat Herders',
-      member1: 'Jason Stevens',
+    teamData.map(team => {
+      store(team);
     });
 
-    console.log(data);
-    console.log(errors);
+    // const x: PT = {
+    //   teamName: 'Woowee',
+    //   member1: 'Bruce',
+    //   loginId: 's.e.mievolved@gmail.com',
 
+    // }
+
+    // store(x);
+
+  }, []);
+
+  const store = async (team: PT) => {
+    console.log("Storing.....")
+    client.models.PuzzlerTeam.create(team);
   }
 
   return (
