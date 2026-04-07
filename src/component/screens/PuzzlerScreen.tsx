@@ -1,5 +1,5 @@
 
-import { Box, FormControl, FormGroup, Stack, TextField, Typography, Divider, Checkbox, FormControlLabel, CircularProgress, IconButton, Grid, MenuItem, Paper, InputLabel, Select, Alert } from "@mui/material";
+import { Box, FormControl, FormGroup, Stack, TextField, Typography, Checkbox, FormControlLabel, CircularProgress, IconButton, Grid, MenuItem, Paper, InputLabel, Select, Alert } from "@mui/material";
 
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import SaveIcon from '@mui/icons-material/Save';
@@ -23,6 +23,7 @@ import { useAuthenticator } from '@aws-amplify/ui-react';
 
 import { Amplify } from 'aws-amplify';
 import outputs from '../../../amplify_outputs.json';
+import PuzzlerTeam from "../puzzler/PuzzlerTeam";
 
 Amplify.configure(outputs)
 
@@ -199,11 +200,11 @@ export default function VolunteerScreen() {
 
   return (
     <>
-      <Box component="img" src={logo} sx={{ width: '320px', maxWidth: "320px", marginTop: '75px' }} />
+      <Box component="img" src={logo} sx={{ width: { xs: '220px', sm: '220px', lg: '320px', xl: '320px' }, marginTop: '55px' }} />
 
       {loaded ?
         <Box sx={{ minWidth: '350px' }}>
-          <Paper sx={{ padding: 1, backgroundColor: "#ffffff77", borderRadius: '15px', marginBottom: '15px' }} >
+          <Paper sx={{ padding: 1, backgroundColor: "#ffffff77", borderRadius: '15px', marginBottom: '10px' }} >
             <Stack direction="column" spacing={1} textAlign={"left"}>
 
               <Grid container>
@@ -231,10 +232,8 @@ export default function VolunteerScreen() {
                     <TimerIcon sx={{ color: 'action.active', mr: 1, my: 0.75 }} />
                     <TextField name="mySpeedPuzzling" label="My Speed Puzzling ID" size='small' sx={{ width: '100%' }} onChange={handleChange} value={formData.mySpeedPuzzling} />
                   </Box>
-
-
-                  <Divider />
-                  <Typography variant="h5">Event</Typography>
+                  {/* 
+                  <Typography variant="h5">Event</Typography> */}
 
                   <FormControlLabel control={<Checkbox sx={{ paddingLeft: 0 }} name="eligible" onChange={handleChecked} />}
                     label="I am a resident of the United Kingdom, its Territories or Crown Dependencies" checked={formData.eligible} />
@@ -258,15 +257,14 @@ export default function VolunteerScreen() {
                     </Box>
                   }
 
-                  <Divider />
                   <Typography variant="h5">About Me</Typography>
 
-                  <FormControlLabel control={<Checkbox sx={{ paddingLeft: 0 }} name="firstEvent" onChange={handleChecked} />} label="UK Nationals is my first in-person puzzle event" checked={formData.firstEvent} />
+                  <FormControlLabel control={<Checkbox sx={{ paddingLeft: 0, m: 0 }} name="firstEvent" onChange={handleChecked} />} label="UK Nationals is my first in-person puzzle event" checked={formData.firstEvent} />
 
                   {!formData.firstEvent &&
                     <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                      <MapsHomeWorkIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
-                      <TextField name="firstEventName" label="First in-person puzzle event" size='small' multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} value={formData.firstEventName} />
+                      <MapsHomeWorkIcon sx={{ color: 'action.active', mr: 1, my: 2 }} />
+                      <TextField name="firstEventName" label="First in-person puzzle event" size='small' multiline rows={2} sx={{ width: '100%' }} onChange={handleChange} value={formData.firstEventName} />
                     </Box>
                   }
 
@@ -276,8 +274,8 @@ export default function VolunteerScreen() {
                   </Box>
 
                   <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <ExtensionIcon sx={{ color: 'action.active', mr: 1, my: 3.5 }} />
-                    <TextField name="favouriteStyle" label="Favourite Style of Puzzle" size='small' multiline rows={3} sx={{ width: '100%' }} onChange={handleChange} value={formData.favouriteStyle} />
+                    <ExtensionIcon sx={{ color: 'action.active', mr: 1, my: 1 }} />
+                    <TextField name="favouriteStyle" label="Favourite Style of Puzzle" size='small' sx={{ width: '100%' }} onChange={handleChange} value={formData.favouriteStyle} />
                   </Box>
 
                   <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
@@ -300,19 +298,22 @@ export default function VolunteerScreen() {
 
             </Stack>
           </Paper>
+
+          <PuzzlerTeam />
+
           <Snackbar
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             autoHideDuration={5000}
             open={saved}
             onClose={handleClose}
-            message="Profile Saved"
+            message="Puzzler Profile Saved"
           >
             <Alert
               onClose={handleClose}
               severity="success"
               variant="filled"
               sx={{ width: '100%' }}
-            >Profile Saved</Alert>
+            >Puzzler Profile Saved</Alert>
           </Snackbar>
         </Box>
 

@@ -6,6 +6,7 @@ import NoMatch from './component/NoMatch';
 import React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
 import PuzzlerScreen from './component/screens/PuzzlerScreen';
+import TeamOpsScreen from './component/screens/TeamOpsScreen';
 
 const Auth = React.lazy(() => import('./component/core/Auth'));
 const Nav = React.lazy(() => import('./component/core/Nav'));
@@ -65,6 +66,7 @@ const App = () => {
             <Route path="/puzzler" element={<Auth />}>
               <Route element={<Nav />}>
                 <Route path="" element={<PuzzlerScreen />} />
+                <Route path="ops/team" element={<TeamOpsScreen />} />
               </Route>
             </Route>
 

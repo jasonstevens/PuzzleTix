@@ -28,11 +28,6 @@ const schema = a.schema({
     capacity: a.integer(),
   }).authorization((allow) => [allow.guest()]),
 
-  Waiting: a.model({
-    division: a.string(),
-    user: a.string(),
-  }).authorization((allow) => [allow.guest()]),
-
   Volunteer: a.model({
     eventId: a.integer(),
     firstName: a.string(),
@@ -136,26 +131,22 @@ const schema = a.schema({
     favouriteStyle: a.string(),
     favouriteDivision: a.string(),
     favouriteCritter: a.string(),
-    puzzlerTeam: a.hasMany('PuzzlerTeam', 'loginId'),
   })
     .secondaryIndexes((index) => [index("loginId")])
     .authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
 
   PuzzlerTeam: a.model({
     loginId: a.string().required(),
-    teamId: a.string().required(),
+    teamId: a.string(),
     teamName: a.string().required(),
-    eventId: a.integer().required(),
+    eventId: a.integer(),
     member1: a.string().required(),
     member2: a.string(),
     member3: a.string(),
     member4: a.string(),
     comments: a.string(),
-    puzzler: a.belongsTo('Puzzler', 'loginId')
   })
-    .secondaryIndexes((index) => [
-      index("loginId").queryField("listTeamByPuzzler")]
-    )
+    .secondaryIndexes((index) => [index("loginId")])
     .authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
 });
 

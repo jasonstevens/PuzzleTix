@@ -63,11 +63,11 @@ export default function Nav() {
     }}>
 
       <CssBaseline />
-      <AppBar sx={{ background: 'linear-gradient(110deg, rgba(255, 222, 89, 1), rgba(255, 102, 196, 1))' }}>
+      <AppBar sx={{ background: 'linear-gradient(110deg, rgba(255, 222, 89, 1), rgba(255, 102, 196, 1))', height: '45px' }}>
         {isAuth() &&
           <>
-            <Toolbar disableGutters>
-              <Box sx={{ height: "50px", width: "auto", flexGrow: 1 }} />
+            <Toolbar disableGutters sx={{ p: 0, m: 0 }} variant="dense">
+              <Box sx={{ width: "auto", flexGrow: 1 }} />
               <Typography sx={{ paddingRight: '10px' }} variant="h6">{user?.signInDetails?.loginId}</Typography>
               <IconButton color="inherit" onClick={signOut} edge="start">
                 <LogoutIcon />
