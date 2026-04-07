@@ -83,7 +83,7 @@ export default function PuzzlerTeamScreen() {
 
   const formFilled = (): boolean => {
     return !(formData
-      && formData.teamName != ''
+      && formData.teamName != '' && formData.member1 != ''
     );
   }
 
@@ -162,22 +162,22 @@ export default function PuzzlerTeamScreen() {
 
                       <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                         <PersonIcon sx={{ color: 'action.active', mr: 1, my: 1 }} />
-                        <TextField name="member1" label="Member 1's Preferred Name" size='small' sx={{ width: '100%' }} onChange={handleChange} value={formData.member1} />
+                        <TextField name="member1" label="Member 1's Preferred Full Name" required size='small' sx={{ width: '100%' }} onChange={handleChange} value={formData.member1} />
                       </Box>
 
                       <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                         <PersonIcon sx={{ color: 'action.active', mr: 1, my: 1 }} />
-                        <TextField name="member2" label="Member 2's Preferred Name" size='small' sx={{ width: '100%' }} onChange={handleChange} value={formData.member2} />
+                        <TextField name="member2" label="Member 2's Preferred Full Name" size='small' sx={{ width: '100%' }} onChange={handleChange} value={formData.member2} />
                       </Box>
 
                       <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                         <PersonIcon sx={{ color: 'action.active', mr: 1, my: 1 }} />
-                        <TextField name="member3" label="Member 3's Preferred Name" size='small' sx={{ width: '100%' }} onChange={handleChange} value={formData.member3} />
+                        <TextField name="member3" label="Member 3's Preferred Full Name" size='small' sx={{ width: '100%' }} onChange={handleChange} value={formData.member3} />
                       </Box>
 
                       <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                         <PersonIcon sx={{ color: 'action.active', mr: 1, my: 1 }} />
-                        <TextField name="member4" label="Member 4's Preferred Name" size='small' sx={{ width: '100%' }} onChange={handleChange} value={formData.member4} />
+                        <TextField name="member4" label="Member 4's Preferred Full Name" size='small' sx={{ width: '100%' }} onChange={handleChange} value={formData.member4} />
                       </Box>
 
                     </Stack>
