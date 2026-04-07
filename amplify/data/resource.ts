@@ -142,8 +142,8 @@ const schema = a.schema({
     .authorization((allow) => [allow.guest(), allow.authenticated("identityPool")]),
 
   PuzzlerTeam: a.model({
-    loginId: a.id().required(),
-    teamId: a.id().required(),
+    loginId: a.string().required(),
+    teamId: a.string().required(),
     teamName: a.string().required(),
     eventId: a.integer().required(),
     member1: a.string().required(),
