@@ -24,6 +24,7 @@ const FoundlingListScreen = React.lazy(() => import('./component/screens/Foundli
 const WaiterListScreen = React.lazy(() => import('./component/screens/WaiterListScreen'));
 const FoundlingEventListScreen = React.lazy(() => import('./component/screens/FoundlingEventListScreen'));
 const FoundlingResponseListScreen = React.lazy(() => import('./component/screens/FoundlingResponseListScreen'));
+const PuzzlerListScreen = React.lazy(() => import('./component/screens/PuzzlerListScreen'));
 
 const theme = createTheme({
   palette: {
@@ -55,6 +56,7 @@ const App = () => {
             <Route path="console/foundling" element={<FoundlingListScreen />} />
             <Route path="console/foundlingevent" element={<FoundlingEventListScreen />} />
             <Route path="console/foundlingresponse" element={<FoundlingResponseListScreen />} />
+            <Route path="console/puzzler" element={<PuzzlerListScreen />} />
             <Route path="console/wait" element={<WaitScreen />} />
 
             <Route path="/finder" element={<Auth />}>
